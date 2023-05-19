@@ -1,5 +1,12 @@
 package culminating;
 
+/**
+ * @author Raymond Ouyang
+ * Teacher: Mrs. Krasteva
+ * Date: 2023-05-15
+ * This class runs the actual game through the other panels. 
+ */
+
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -10,11 +17,29 @@ import javax.swing.SwingUtilities;
 @SuppressWarnings("serial")
 public class GameMain extends JFrame {
 	
+	/**
+	 * The current game
+	 */
 	private static GameMain curGame;
+	
+	/**
+	 * The current state
+	 */
 	private State currentState;
+	
+	/**
+	 * The current panel
+	 */
 	private GamePanel currentPanel;
-	private static final int REFRESH_TIME = 20;
+	
+	/**
+	 * Time until next frame (frame rate = 1000 / REFRESH_TIME)
+	 */
+	public static final int REFRESH_TIME = 20;
 
+	/**
+	 * Actually runs the game
+	 */
 	public GameMain() {
 		try {
 			setSize(800, 500);
@@ -43,18 +68,31 @@ public class GameMain extends JFrame {
 		}
 	}
 	
+	/**
+	 * Adds the new panel
+	 */
 	private void addNew() {
 		currentPanel = currentState.getNew();
 		setContentPane(currentPanel);
 		repaint();
 	}
 	
+	/**
+	 * Gets the current game
+	 * 
+	 * @return	curGame
+	 */
 	public static GameMain getGame() {
 		return curGame;
 	}
 
+	/**
+	 * Runner
+	 * 
+	 * @param args	command-line arguments (unused)
+	 */
 	public static void main(String[] args) {
-		SwingUtilities.invokeLater(() -> curGame = new GameMain());
+		SwingUtilities.invokeLater(() -> curGame = new GameMain()); // For thread-safety
 	}
 
 }

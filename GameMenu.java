@@ -4,6 +4,13 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
+/**
+ * @author Alex Li
+ * Teacher: Mrs. Krasteva
+ * Date: 2023-05-15
+ * 
+ */
+
 @SuppressWarnings("serial")
 public class GameMenu extends GamePanel {
 	private String state;
@@ -51,17 +58,19 @@ public class GameMenu extends GamePanel {
 
 	public void paintSplash(Graphics g) {
 		ImageIcon logo = new ImageIcon("Culminating Company Logo.jpg");
-		System.out.println(logo.toString());
+//		System.out.println(logo.toString());
+		@SuppressWarnings("unused")
 		int w = logo.getIconWidth();
+		@SuppressWarnings("unused")
 		int h = logo.getIconHeight();
-		System.out.println(w+" "+h);
+//		System.out.println(w+" "+h);
 		logo.paintIcon(this,g,-500+framesDone*3,50);
 		
 		g.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 30));
 		g.drawString("O&L Design Firms presents...", -350+framesDone*3, 100);
 		
 		
-		System.out.println("this");
+//		System.out.println("this");
 	}
 
 	public void paintMain(Graphics g) {
@@ -78,22 +87,22 @@ public class GameMenu extends GamePanel {
 		});
 		learn.addActionListener((ActionEvent e) -> {
 			returnState = State.LEARN;
-			System.out.println(returnState.toString());
+//			System.out.println(returnState.toString());
 			repaint();
 		});
 		maze.addActionListener((ActionEvent e) -> {
 			returnState = State.MAZE;
-			System.out.println(returnState.toString());
+//			System.out.println(returnState.toString());
 			repaint();
 		});
 		action.addActionListener((ActionEvent e) -> {
 			returnState = State.ACTION;
-			System.out.println(returnState.toString());
+//			System.out.println(returnState.toString());
 			repaint();
 		});
 		exit.addActionListener((ActionEvent e) -> {
 			returnState = State.EXIT;
-			System.out.println(returnState.toString());
+//			System.out.println(returnState.toString());
 			repaint();
 		});
 		learn.setBounds(190, 170, 400, 50);

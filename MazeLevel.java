@@ -1,5 +1,12 @@
 package culminating;
 
+/**
+ * @author Alex Li
+ * Teacher: Mrs. Krasteva
+ * Date: 2023-05-15
+ * 
+ */
+
 @SuppressWarnings("serial")
 public class MazeLevel extends GamePanel {
 
@@ -8,7 +15,7 @@ public class MazeLevel extends GamePanel {
 	}
 
 	@Override
-	State display() {
+	public State display() {
 		// TODO Auto-generated method stub
 		return null;
 	}
