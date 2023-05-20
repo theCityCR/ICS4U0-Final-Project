@@ -1,5 +1,7 @@
 package culminating;
 
+import java.awt.FlowLayout;
+
 /**
  * @author Raymond Ouyang
  * Teacher: Mrs. Krasteva
@@ -24,6 +26,7 @@ public class ActionLevel extends GamePanel {
 	 * Creates a new ActionLevel object
 	 */
 	public ActionLevel() {
+		setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
 		currentState = ActionState.INSTRUCTION;
 		addNew();
 	}

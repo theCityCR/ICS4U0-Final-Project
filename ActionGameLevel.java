@@ -15,6 +15,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 
 import javax.swing.JLabel;
@@ -25,37 +26,32 @@ public class ActionGameLevel extends ActionGamePanel {
 	/**
 	 * Size of tank
 	 */
-	public static final int TANK_SIZE = 25;
+	public static final double TANK_SIZE = 25;
 
 	/**
 	 * Damage of tank
 	 */
-	public static final int TANK_DAMAGE = 100;
+	public static final double TANK_DAMAGE = 100;
 
 	/**
 	 * Health of tank
 	 */
-	public static final int TANK_HEALTH = 2000;
-
-	/**
-	 * Speed of tank
-	 */
-	public static final double TANK_SPEED = 2;
+	public static final double TANK_HEALTH = 2000;
 
 	/**
 	 * Size of bullet
 	 */
-	public static final int BULLET_SIZE = 5;
+	public static final double BULLET_SIZE = 5;
 
 	/**
 	 * Damage of bullet
 	 */
-	public static final int BULLET_DAMAGE = 50;
+	public static final double BULLET_DAMAGE = 100;
 
 	/**
 	 * Health of bullet
 	 */
-	public static final int BULLET_HEALTH = 100;
+	public static final double BULLET_HEALTH = 200;
 
 	/**
 	 * Speed of bullet
@@ -128,6 +124,11 @@ public class ActionGameLevel extends ActionGamePanel {
 	private boolean down;
 
 	/**
+	 * Whether mouse is down
+	 */
+	private boolean mouseDown;
+
+	/**
 	 * Creates a new ActionGameLevel instance
 	 */
 	public ActionGameLevel() {
@@ -154,12 +155,12 @@ public class ActionGameLevel extends ActionGamePanel {
 		right = false;
 		up = false;
 		down = false;
+		mouseDown = false;
 
-		this.addKeyListener(new KeyAdapter() {
+		GameMain.getGame().getContentPane().addKeyListener(new KeyAdapter() {
 
 			@Override
 			public void keyPressed(KeyEvent e) {
-//				System.out.println("hi");
 				switch (e.getKeyCode()) {
 				case KeyEvent.VK_UP:
 				case KeyEvent.VK_W:
@@ -182,7 +183,6 @@ public class ActionGameLevel extends ActionGamePanel {
 
 			@Override
 			public void keyReleased(KeyEvent e) {
-//				System.out.println("hi");
 				switch (e.getKeyCode()) {
 				case KeyEvent.VK_UP:
 				case KeyEvent.VK_W:
@@ -204,19 +204,35 @@ public class ActionGameLevel extends ActionGamePanel {
 			}
 
 		});
-		
-		GameMain.getGame().addMouseListener(new MouseAdapter() {
+
+		this.addMouseListener(new MouseAdapter() {
 
 			@Override
 			public void mousePressed(MouseEvent e) {
-//				System.out.println(1);
+				mouseDown = true;
 			}
 
 			@Override
 			public void mouseReleased(MouseEvent e) {
-//				System.out.println(2);
+				mouseDown = false;
 			}
-			
+
+		});
+
+		this.addMouseMotionListener(new MouseMotionListener() {
+
+			@Override
+			public void mouseDragged(MouseEvent e) {
+				mouseX = e.getX();
+				mouseY = e.getY();
+			}
+
+			@Override
+			public void mouseMoved(MouseEvent e) {
+				mouseX = e.getX();
+				mouseY = e.getY();
+			}
+
 		});
 	}
 
@@ -227,7 +243,6 @@ public class ActionGameLevel extends ActionGamePanel {
 	 */
 	@Override
 	public ActionState display() {
-//		System.out.println(left + " " + right + " " + up + " " + down);
 		for (Moveable m : movers) {
 			m.move();
 		}
@@ -271,7 +286,7 @@ public class ActionGameLevel extends ActionGamePanel {
 		 * @param dx distance of x
 		 * @param dy distance of y
 		 */
-		public Direction(int dx, int dy) {
+		public Direction(double dx, double dy) {
 			this(Math.atan2(dy, dx));
 		}
 
@@ -290,8 +305,8 @@ public class ActionGameLevel extends ActionGamePanel {
 		 * @param speed the speed of object
 		 * @return how much x changes
 		 */
-		public int moveX(double speed) {
-			return (int) (speed * Math.cos(direction));
+		public double moveX(double speed) {
+			return speed * Math.cos(direction);
 		}
 
 		/**
@@ -300,8 +315,8 @@ public class ActionGameLevel extends ActionGamePanel {
 		 * @param speed the speed of object
 		 * @return how much y changes
 		 */
-		public int moveY(double speed) {
-			return (int) (speed * Math.sin(direction));
+		public double moveY(double speed) {
+			return speed * Math.sin(direction);
 		}
 
 		/**
@@ -329,27 +344,27 @@ public class ActionGameLevel extends ActionGamePanel {
 		/**
 		 * x position
 		 */
-		private int x;
+		private double x;
 
 		/**
 		 * y position
 		 */
-		private int y;
+		private double y;
 
 		/**
 		 * size of object
 		 */
-		private int size;
+		private double size;
 
 		/**
 		 * damage to deal
 		 */
-		private int damage;
+		private double damage;
 
 		/**
 		 * health of object
 		 */
-		private int health;
+		private double health;
 
 		/**
 		 * speed of object
@@ -367,7 +382,7 @@ public class ActionGameLevel extends ActionGamePanel {
 		 * @param health health of object
 		 * @param speed  speed of object
 		 */
-		public Moveable(Color player, int x, int y, int size, int damage, int health, double speed) {
+		public Moveable(Color player, double x, double y, double size, double damage, double health, double speed) {
 			this.player = player;
 			this.x = x;
 			this.y = y;
@@ -381,7 +396,6 @@ public class ActionGameLevel extends ActionGamePanel {
 		 * Moves object
 		 */
 		public void move() {
-			health++;
 			for (Moveable m : movers) {
 				if (isTouching(m)) {
 					health -= m.damage;
@@ -400,7 +414,7 @@ public class ActionGameLevel extends ActionGamePanel {
 		public void move(Direction direction) {
 			this.x += direction.moveX(speed);
 			this.y += direction.moveY(speed);
-			if (this.x < 0 || this.x > 800 || this.y < 0 || this.y > 800) {
+			if (this.x < 0 || this.x > 800 || this.y < 0 || this.y > 463) {
 				onBorder();
 			}
 		}
@@ -412,7 +426,8 @@ public class ActionGameLevel extends ActionGamePanel {
 		 */
 		public void paint(Graphics g) {
 			g.setColor(player);
-			g.fillOval(getX() - getSize(), getY() - getSize(), 2 * getSize(), 2 * getSize());
+			g.fillOval((int) (getX() - getSize()), (int) (getY() - getSize()), (int) (2 * getSize()),
+					(int) (2 * getSize()));
 		}
 
 		/**
@@ -420,7 +435,7 @@ public class ActionGameLevel extends ActionGamePanel {
 		 */
 		public void onBorder() {
 			this.x = Math.max(0, Math.min(800, this.x));
-			this.y = Math.max(0, Math.min(500, this.y));
+			this.y = Math.max(0, Math.min(463, this.y));
 		}
 
 		/**
@@ -445,21 +460,21 @@ public class ActionGameLevel extends ActionGamePanel {
 		/**
 		 * @return the x
 		 */
-		public int getX() {
+		public double getX() {
 			return x;
 		}
 
 		/**
 		 * @return the y
 		 */
-		public int getY() {
+		public double getY() {
 			return y;
 		}
 
 		/**
 		 * @return the size
 		 */
-		public int getSize() {
+		public double getSize() {
 			return size;
 		}
 	}
@@ -468,7 +483,7 @@ public class ActionGameLevel extends ActionGamePanel {
 	 * @author Raymond Ouyang Teacher: Mrs. Krasteva Date: 2023-05-15 This class
 	 *         represents a tank. Shoots bullets.
 	 */
-	abstract class Tank extends Moveable {
+	private class Tank extends Moveable {
 
 		/**
 		 * Reload of tank
@@ -492,9 +507,10 @@ public class ActionGameLevel extends ActionGamePanel {
 		 * @param x      x position
 		 * @param y      y position
 		 * @param reload reload of tank
+		 * @param speed  speed of tank
 		 */
-		public Tank(Color player, int x, int y, int reload) {
-			super(player, x, y, TANK_SIZE, TANK_DAMAGE, TANK_HEALTH, TANK_SPEED);
+		public Tank(Color player, double x, double y, int reload, double speed) {
+			super(player, x, y, TANK_SIZE, TANK_DAMAGE, TANK_HEALTH, speed);
 			this.reload = reload;
 			this.nextTime = reload;
 			this.direction = new Direction(1, 0);
@@ -506,6 +522,7 @@ public class ActionGameLevel extends ActionGamePanel {
 		@Override
 		public void move() {
 			super.move();
+			super.health = Math.min(TANK_HEALTH, super.health + 1);
 			nextTime--;
 		}
 
@@ -518,27 +535,29 @@ public class ActionGameLevel extends ActionGamePanel {
 		public void paint(Graphics g) {
 			g.setColor(Color.GRAY);
 			g.fillPolygon(
-					new int[] { super.getX() + this.direction.rotateMore(RIGHT_ANGLE).moveX(getSize() / 2),
-							super.getX() + this.direction.rotateMore(-RIGHT_ANGLE).moveX(getSize() / 2),
-							super.getX() + this.direction.rotateMore(-OTHER_ANGLE).moveX(getSize() * 2),
-							super.getX() + this.direction.rotateMore(OTHER_ANGLE).moveX(getSize() * 2) },
-					new int[] { super.getY() + this.direction.rotateMore(RIGHT_ANGLE).moveY(getSize() / 2),
-							super.getY() + this.direction.rotateMore(-RIGHT_ANGLE).moveY(getSize() / 2),
-							super.getY() + this.direction.rotateMore(-OTHER_ANGLE).moveY(getSize() * 2),
-							super.getY() + this.direction.rotateMore(OTHER_ANGLE).moveY(getSize() * 2) },
+					new int[] { (int) (super.getX() + this.direction.rotateMore(RIGHT_ANGLE).moveX(getSize() / 2)),
+							(int) (super.getX() + this.direction.rotateMore(-RIGHT_ANGLE).moveX(getSize() / 2)),
+							(int) (super.getX() + this.direction.rotateMore(-OTHER_ANGLE).moveX(getSize() * 2)),
+							(int) (super.getX() + this.direction.rotateMore(OTHER_ANGLE).moveX(getSize() * 2)) },
+					new int[] { (int) (super.getY() + this.direction.rotateMore(RIGHT_ANGLE).moveY(getSize() / 2)),
+							(int) (super.getY() + this.direction.rotateMore(-RIGHT_ANGLE).moveY(getSize() / 2)),
+							(int) (super.getY() + this.direction.rotateMore(-OTHER_ANGLE).moveY(getSize() * 2)),
+							(int) (super.getY() + this.direction.rotateMore(OTHER_ANGLE).moveY(getSize() * 2)) },
 					4);
 			super.paint(g);
 			g.setColor(Color.BLACK);
-			g.drawRect(super.getX() - super.getSize(), super.getY() + super.getSize() + 5, 2 * super.getSize(), 10);
-			g.fillRect(super.getX() - super.getSize(), super.getY() + super.getSize() + 5,
-					2 * super.getSize() * super.health / TANK_HEALTH, 10);
+			g.drawRect((int) (super.getX() - super.getSize() - 1), (int) (super.getY() + super.getSize() + 4),
+					(int) (2 * super.getSize() + 1), 11);
+			g.setColor(Color.GREEN);
+			g.fillRect((int) (super.getX() - super.getSize()), (int) (super.getY() + super.getSize() + 5),
+					(int) (2 * super.getSize() * super.health / TANK_HEALTH), 10);
 		}
 
 		/**
 		 * Tries to shoot a bullet
 		 */
 		protected void shoot() {
-			if (nextTime == 0) {
+			if (nextTime <= 0) {
 				this.nextTime = reload;
 				toAdd.add(new Bullet(super.player, super.getX() + this.direction.moveX(getSize() * 2),
 						super.getY() + this.direction.moveY(getSize() * 2), this.direction));
@@ -568,7 +587,7 @@ public class ActionGameLevel extends ActionGamePanel {
 		 * Creates new player tank
 		 */
 		public PlayerTank() {
-			super(Color.BLUE, 150, 400, 40);
+			super(Color.BLUE, 150, 400, 40, 3);
 			if (tankCreated) {
 				throw new IllegalStateException("The PlayerTank class can only be instantiated once in one game.");
 			}
@@ -582,10 +601,12 @@ public class ActionGameLevel extends ActionGamePanel {
 		public void move() {
 			super.move();
 			if (right || left || up || down) {
-				super.move(new Direction((right ? 1 : 0) - (left ? 1 : 0), (up ? 1 : 0) - (down ? 1 : 0)));
+				super.move(new Direction((right ? 1 : 0) - (left ? 1 : 0), (down ? 1 : 0) - (up ? 1 : 0)));
 			}
 			super.setDirection(new Direction(mouseX - super.getX(), mouseY - super.getY()));
-			// TODO mouselistener, keylistener find stuff :(
+			if (mouseDown) {
+				super.shoot();
+			}
 		}
 
 	}
@@ -600,7 +621,7 @@ public class ActionGameLevel extends ActionGamePanel {
 		 * Creates a new AITank object
 		 */
 		public AITank() {
-			super(Color.RED, 650, 400, 20);
+			super(Color.RED, 650, 400, 30, 2);
 		}
 
 		/**
@@ -635,7 +656,7 @@ public class ActionGameLevel extends ActionGamePanel {
 		 * @param y         y position
 		 * @param direction direction of bullet
 		 */
-		public Bullet(Color player, int x, int y, Direction direction) {
+		public Bullet(Color player, double x, double y, Direction direction) {
 			super(player, x, y, BULLET_SIZE, BULLET_DAMAGE, BULLET_HEALTH, BULLET_SPEED);
 			this.direction = direction;
 		}
