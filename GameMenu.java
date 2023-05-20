@@ -13,6 +13,7 @@ import javax.swing.*;
 
 @SuppressWarnings("serial")
 public class GameMenu extends GamePanel {
+	
 	private String state;
 	private State returnState;
 	private String previousState;
@@ -22,7 +23,9 @@ public class GameMenu extends GamePanel {
 	Button action = new Button("Action");
 	Button exit = new Button("Exit");
 	Button splash = new Button("Splash");
-	
+	/**
+	* Class constructor of the GameMenu class
+	*/
 	public GameMenu() {
 		state = "main";
 		previousState = state;
@@ -30,7 +33,11 @@ public class GameMenu extends GamePanel {
 		setPreferredSize(new Dimension(800, 500));
 		setLayout(new FlowLayout());
 	}
-
+	
+	/**
+	* Returns the return state, or what the screen the game should currently be on. Also used to animate the splash screen
+	* returns: returnstate, the state that the screen should be on
+	*/
 	@Override
 	public State display() {
 		if (state == "splash") {
@@ -39,7 +46,10 @@ public class GameMenu extends GamePanel {
 		}
 		return returnState;
 	}
-
+	
+	/**
+	* method to paint on the JPanel of this class. Changes depending on the current state of the class.
+	*/
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
@@ -55,8 +65,10 @@ public class GameMenu extends GamePanel {
 			removeAll();
 		
 	}
-
-	public void paintSplash(Graphics g) {
+	/**
+	* Helper method to paint the splash screen.
+	*/
+	private void paintSplash(Graphics g) {
 		ImageIcon logo = new ImageIcon("Culminating Company Logo.jpg");
 //		System.out.println(logo.toString());
 		@SuppressWarnings("unused")
@@ -72,8 +84,10 @@ public class GameMenu extends GamePanel {
 		
 //		System.out.println("this");
 	}
-
-	public void paintMain(Graphics g) {
+	/**
+	* Helper method to paint the main menu
+	*/
+	private void paintMain(Graphics g) {
 		JPanel titlePanel = new JPanel();
 		titlePanel.setPreferredSize(new Dimension(800, 100));
 		JLabel label = new JLabel("Free Play Frontier");
