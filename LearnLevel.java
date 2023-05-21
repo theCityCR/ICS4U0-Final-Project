@@ -22,6 +22,9 @@ public class LearnLevel extends GamePanel {
 	private int currentCard;
 	private int cardsFinished;
 	
+	/**
+	* Class constructor for the learn level class
+	*/
 	public LearnLevel() {
 		returnState = State.LEARN;
 		setPreferredSize(new Dimension(800, 500));
@@ -30,8 +33,10 @@ public class LearnLevel extends GamePanel {
 		previousState = "instructions";
 		initializeCards();
 	}
-	
-	public void initializeCards() {
+	/**
+	* helper method to initialize variables related to cards
+	*/
+	private void initializeCards() {
 		cardsFinished = 0;
 		currentCard = 0;
 		cardsAccessed = new boolean[12];
@@ -42,6 +47,9 @@ public class LearnLevel extends GamePanel {
 	}
 	
 	@Override
+	/**
+	* Paints and animates the LearnLevel panel
+	*/
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 //		System.out.println(Math.random());
@@ -60,8 +68,10 @@ public class LearnLevel extends GamePanel {
 		if (previousState.equals(currentState))
 			removeAll();
 	}
-	
-	public void paintCard(Graphics g) {
+	/**
+	* Helper method to paint the card and its info when clicked
+	*/
+	private void paintCard(Graphics g) {
 		if (!cardsAccessed[currentCard]) {
 			cardsFinished ++;
 			cardsAccessed[currentCard] = true;
@@ -101,8 +111,10 @@ public class LearnLevel extends GamePanel {
 		
 		
 	} 
-	
-	public void paintInstructions(Graphics g) {
+	/**
+	* Paints the instructions for the LearnLevel
+	*/
+	private void paintInstructions(Graphics g) {
 //		System.out.println(Math.random());
 		JPanel instructionPanel = new JPanel();
 		instructionPanel.setPreferredSize(new Dimension(800,500));
@@ -120,12 +132,16 @@ public class LearnLevel extends GamePanel {
 		add(instructionPanel);
 		
 	}
-	
-	public void paintMain(Graphics g) {
+	/**
+	* Paints the main screen in the learn level, containing all the clickable cards
+	*/
+	private void paintMain(Graphics g) {
 		
 	}
-	
-	public void paintFinal(Graphics g) {
+	/**
+	* paints the transition screen, where the user can choose to exit to the main menu or continue to the next level.
+	*/
+	private void paintFinal(Graphics g) {
 		
 	}
 	@Override
