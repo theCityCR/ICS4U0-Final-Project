@@ -14,12 +14,33 @@ import javax.swing.*;
 
 @SuppressWarnings({"serial", "unused"})
 public class LearnLevel extends GamePanel {
+	/**
+	* state returned by display
+	*/
 	private State returnState;
+	/**
+	* holds whether the state is either card, instructions, main, or transition
+	*/
 	private String currentState;
+	/**
+	* previous state before updating so that the program knows when to clear screen
+	*/
 	private String previousState;
+	/**
+	* All info held in the cards
+	*/
 	private String[] cardInfo;
+	/**
+	* holds which cards have already been accessed by the user
+	*/
 	private boolean[] cardsAccessed;
+	/**
+	* the current card the use has clicked on
+	*/
 	private int currentCard;
+	/**
+	* the amount of cards that have been looked at
+	*/
 	private int cardsFinished;
 	
 	/**
