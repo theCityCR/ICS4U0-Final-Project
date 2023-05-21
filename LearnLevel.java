@@ -145,6 +145,10 @@ public class LearnLevel extends GamePanel {
 		
 	}
 	@Override
+	/**
+	* Returns the return state, or what the screen the game should currently be on. 
+	* returns: returnstate, the state that the screen should be on
+	*/
 	public State display() {
 		repaint();
 //		System.out.println(currentState);
