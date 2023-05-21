@@ -13,16 +13,23 @@ import javax.swing.*;
 
 @SuppressWarnings("serial")
 public class GameMenu extends GamePanel {
-	
+	/**
+	* current screen of the GameMenu. Either splash or menu
+	*/
 	private String state;
+	/**
+	* returns the state that the game should be on.
+	*/
 	private State returnState;
+	/**
+	* previous screen of the GameMenu. Helps to know when to repaint and clear screen
+	*/
 	private String previousState;
+	/**
+	* counting frames for the splash screen animation
+	*/
 	private int framesDone;
-	Button learn = new Button("Learn");
-	Button maze = new Button("Maze");
-	Button action = new Button("Action");
-	Button exit = new Button("Exit");
-	Button splash = new Button("Splash");
+	
 	/**
 	* Class constructor of the GameMenu class
 	*/
@@ -89,6 +96,11 @@ public class GameMenu extends GamePanel {
 	*/
 	private void paintMain(Graphics g) {
 		JPanel titlePanel = new JPanel();
+		Button learn = new Button("Learn");
+		Button maze = new Button("Maze");
+		Button action = new Button("Action");
+		Button exit = new Button("Exit");
+		Button splash = new Button("Splash");
 		titlePanel.setPreferredSize(new Dimension(800, 100));
 		JLabel label = new JLabel("Free Play Frontier");
 		label.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 40));
