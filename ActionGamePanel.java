@@ -29,4 +29,9 @@ public abstract class ActionGamePanel extends JPanel {
 	 * @return	the state
 	 */
 	public abstract ActionState display();
+	
+	/**
+	 * Initializes the panel (when shown again)
+	 */
+	public void init() {}
 }

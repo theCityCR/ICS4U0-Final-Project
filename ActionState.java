@@ -8,23 +8,5 @@ package culminating;
  */
 
 public enum ActionState {
-	INSTRUCTION, GAME, END, NEXT;
-	
-	/**
-	 * Gets a new instance of the object represented by this enum. 
-	 * 
-	 * @return	the new ActionGamePanel instance
-	 */
-	public ActionGamePanel getNew() {
-		switch (this) {
-		case INSTRUCTION:
-			return new ActionInstructionLevel();
-		case GAME:
-			return new ActionGameLevel();
-		case END:
-			return new ActionEndLevel();
-		default:
-			return null;
-		}
-	}
+	INSTRUCTION, GAME, DIALOGUE, CONTINUE, END, NEXT;
 }

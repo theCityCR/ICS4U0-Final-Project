@@ -1,4 +1,4 @@
-package main;
+package culminating;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
@@ -49,7 +49,7 @@ public class MazeLevel extends GamePanel {
 	}
 
 	@Override
-	State display() {
+	public State display() {
 		// TODO Auto-generated method stub
 		repaint();
 		return State.MAZE;

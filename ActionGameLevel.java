@@ -17,11 +17,22 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 
 import javax.swing.JLabel;
 
 @SuppressWarnings("serial")
 public class ActionGameLevel extends ActionGamePanel {
+
+	/**
+	 * Min frames before AI gives insult
+	 */
+	public static final int FRAMES_MIN = 999150;
+	
+	/**
+	 * Max frames before AI gives insult
+	 */
+	public static final int FRAMES_MAX = 999500;
 
 	/**
 	 * Size of tank
@@ -69,6 +80,54 @@ public class ActionGameLevel extends ActionGamePanel {
 	public static final double OTHER_ANGLE = Math.atan(0.25);
 
 	/**
+	 * Questions and their potential responses
+	 * 
+	 * In each 1-D array:
+	 * 
+	 * The first String is the question.
+	 * 
+	 * The second String is the correct answer.
+	 * 
+	 * The third to fifth Strings are wrong answers.
+	 */
+	public static final String[][] QUESTIONS_RESPONSES = {
+			{ "Learn to play, noob!", "Your insults won't affect me.",
+					"Thanks for the feedback. I'll work on beating you.", "You're just jealous of my skills!",
+					"You're right, I'm terrible." },
+			{ "I hope you die!", "Wow, that's a bit extreme.", "I hope you die instead.",
+					"Your words say more about you than me.", "I hope the same for you!" },
+			{ "You're garbage at this game!", "Insults like that don't contribute to a healthy atmosphere.",
+					"I don't value your opinion.", "You must be a pro to notice.",
+					"You're right, I should quit playing." },
+			{ "Uninstall the game, loser!", "Your negativity won't discourage me.",
+					"I'll keep playing and enjoying it, unlike you.", "Why would I? Your words don't matter to me.",
+					"You're right, I'm uninstalling right now." },
+			{ "You're so bad, it's embarrassing!", "Your insults don't define my worth.",
+					"Thanks for the motivation to improve.", "I'm proud of my superior progress so far.",
+					"You're right, I'll never get better." },
+			{ "Get good, scrub!", "Constructive criticism would be more helpful.",
+					"I'm just here to have fun, not be the best.", "I'll improve at my own pace, not one set by you.",
+					"You're right, I'm hopeless." },
+			{ "You're a no-life try hard!", "Everyone has their own hobbies and interests.",
+					"Your futile words won't affect my enjoyment of the game.", "I play because I enjoy beating you.",
+					"You're right, I need to find a life." },
+			{ "You're a worthless teammate!", "I'm doing my best, just like everyone else.",
+					"Your negativity won't bring the team together.",
+					"I usually appreciate the feedback, but you're trash.",
+					"You're right, I'm dragging the team down." },
+			{ "You're so bad, I can't believe it!", "Everyone has their strengths and weaknesses.",
+					"Your insults won't discourage me from playing.", "I'm working on improving, unlike you.",
+					"You're right, I should quit playing." },
+			{ "You're a worthless waste of space!", "Everyone deserves respect, regardless of their gaming skills.",
+					"Your words say more about you than me.", "I'm not sorry if I've done something to upset you.",
+					"You're right, I'll never amount to anything." } };
+
+	/**
+	 * Ratio of correct reactions
+	 */
+	public static double rightRatio;
+
+	/**
 	 * Moving objects
 	 */
 	private ArrayList<Moveable> movers;
@@ -89,9 +148,9 @@ public class ActionGameLevel extends ActionGamePanel {
 	private PlayerTank player;
 
 	/**
-	 * Instructions
+	 * The AI
 	 */
-	private JLabel instructions;
+	private AITank ai;
 
 	/**
 	 * x-position of mouse
@@ -129,35 +188,66 @@ public class ActionGameLevel extends ActionGamePanel {
 	private boolean mouseDown;
 
 	/**
+	 * Whether the game has ended
+	 */
+	private boolean ended;
+	
+	private int framesWait;
+	
+	private static ActionGameLevel curInstance;
+
+	/**
+	 * @return the curInstance
+	 */
+	static ActionGameLevel getCurInstance() {
+		return curInstance;
+	}
+	
+	private static Boolean won;
+
+	/**
+	 * @return the won
+	 */
+	static Boolean getWon() {
+		return won;
+	}
+
+	/**
 	 * Creates a new ActionGameLevel instance
 	 */
 	public ActionGameLevel() {
 		player = new PlayerTank();
+		ai = new AITank();
 		movers = new ArrayList<>();
 		toRemove = new ArrayList<>();
 		toAdd = new ArrayList<>();
-		movers.add(new AITank());
+		movers.add(ai);
 		movers.add(player);
 
-		setLayout(new FlowLayout(FlowLayout.CENTER, 0, 50));
+		won = null;
+		curInstance = this;
+		setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
 
 		// Add label
 		String labelText = String.format("<html><div style=\"width:%dpx; text-align:center;\">%s</div></html>", 400,
 				"Remember to act in a caring and positive manner!");
-		instructions = new JLabel(labelText);
+		JLabel instructions = new JLabel(labelText);
 		instructions.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 30));
 		instructions.setVisible(false);
 		add(instructions);
+		
+		framesWait = (int) (Math.random() * (FRAMES_MAX - FRAMES_MIN)) + FRAMES_MIN;
+		ended = false;
 
-		mouseX = 0;
-		mouseY = 0;
+		mouseX = 400;
+		mouseY = 400;
 		left = false;
 		right = false;
 		up = false;
 		down = false;
 		mouseDown = false;
 
-		GameMain.getGame().getContentPane().addKeyListener(new KeyAdapter() {
+		this.addKeyListener(new KeyAdapter() {
 
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -209,12 +299,16 @@ public class ActionGameLevel extends ActionGamePanel {
 
 			@Override
 			public void mousePressed(MouseEvent e) {
-				mouseDown = true;
+				if (e.getButton() == MouseEvent.BUTTON1) {
+					mouseDown = true;
+				}
 			}
 
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				mouseDown = false;
+				if (e.getButton() == MouseEvent.BUTTON1) {
+					mouseDown = false;
+				}
 			}
 
 		});
@@ -235,6 +329,15 @@ public class ActionGameLevel extends ActionGamePanel {
 
 		});
 	}
+	
+	@Override
+	public void init() {
+		left = false;
+		right = false;
+		up = false;
+		down = false;
+		mouseDown = false;
+	}
 
 	/**
 	 * Displays panel
@@ -243,6 +346,7 @@ public class ActionGameLevel extends ActionGamePanel {
 	 */
 	@Override
 	public ActionState display() {
+		requestFocusInWindow();
 		for (Moveable m : movers) {
 			m.move();
 		}
@@ -255,23 +359,48 @@ public class ActionGameLevel extends ActionGamePanel {
 		toRemove.clear();
 		toAdd.clear();
 		repaint();
-		return ActionState.GAME;
+		framesWait --;
+		if (framesWait < 0) {
+			framesWait = (int) (Math.random() * (FRAMES_MAX - FRAMES_MIN)) + FRAMES_MIN;;
+			return ActionState.DIALOGUE;
+		}
+		if (ended) {
+			return ActionState.END;
+		} else {
+			return ActionState.GAME;
+		}
+	}
+
+	public void endGame() {
+		ended = true;
 	}
 
 	/**
-	 * Paints component
+	 * Custom paint method.
+	 * 
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void paintComponent(Graphics g) {
 		g.clearRect(0, 0, 800, 500);
-		for (Moveable m : movers) {
-			m.paint(g);
+		try {
+			for (Moveable m : movers) {
+				m.paint(g);
+			}
+		} catch (ConcurrentModificationException e) {
+			e.printStackTrace();
+			repaint();
 		}
 	}
 
 	/**
-	 * @author Raymond Ouyang Teacher: Mrs. Krasteva Date: 2023-05-15 This class
-	 *         represents a direction. This class is immutable.
+	 * @author Raymond Ouyang
+	 * 
+	 *         Teacher: Mrs. Krasteva
+	 * 
+	 *         Date: 2023-05-15
+	 * 
+	 *         This class represents a direction. This class is immutable.
 	 */
 	private final class Direction {
 
@@ -331,8 +460,13 @@ public class ActionGameLevel extends ActionGamePanel {
 	}
 
 	/**
-	 * @author Raymond Ouyang Teacher: Mrs. Krasteva Date: 2023-05-15 This class
-	 *         represents something that can move.
+	 * @author Raymond Ouyang
+	 * 
+	 *         Teacher: Mrs. Krasteva
+	 * 
+	 *         Date: 2023-05-15
+	 * 
+	 *         This class represents something that can move.
 	 */
 	private abstract class Moveable {
 
@@ -398,8 +532,8 @@ public class ActionGameLevel extends ActionGamePanel {
 		public void move() {
 			for (Moveable m : movers) {
 				if (isTouching(m)) {
-					health -= m.damage;
-					if (health <= 0) {
+					health = getHealth() - m.damage;
+					if (getHealth() <= 0) {
 						dead();
 					}
 				}
@@ -477,11 +611,23 @@ public class ActionGameLevel extends ActionGamePanel {
 		public double getSize() {
 			return size;
 		}
+
+		/**
+		 * @return the health
+		 */
+		public double getHealth() {
+			return health;
+		}
 	}
 
 	/**
-	 * @author Raymond Ouyang Teacher: Mrs. Krasteva Date: 2023-05-15 This class
-	 *         represents a tank. Shoots bullets.
+	 * @author Raymond Ouyang
+	 * 
+	 *         Teacher: Mrs. Krasteva
+	 * 
+	 *         Date: 2023-05-15
+	 * 
+	 *         This class represents a tank. Shoots bullets.
 	 */
 	private class Tank extends Moveable {
 
@@ -522,7 +668,7 @@ public class ActionGameLevel extends ActionGamePanel {
 		@Override
 		public void move() {
 			super.move();
-			super.health = Math.min(TANK_HEALTH, super.health + 1);
+			super.health = Math.min(TANK_HEALTH, super.getHealth() + 1);
 			nextTime--;
 		}
 
@@ -550,7 +696,7 @@ public class ActionGameLevel extends ActionGamePanel {
 					(int) (2 * super.getSize() + 1), 11);
 			g.setColor(Color.GREEN);
 			g.fillRect((int) (super.getX() - super.getSize()), (int) (super.getY() + super.getSize() + 5),
-					(int) (2 * super.getSize() * super.health / TANK_HEALTH), 10);
+					(int) (2 * super.getSize() * super.getHealth() / TANK_HEALTH), 10);
 		}
 
 		/**
@@ -573,10 +719,15 @@ public class ActionGameLevel extends ActionGamePanel {
 	}
 
 	/**
-	 * @author Raymond Ouyang Teacher: Mrs. Krasteva Date: 2023-05-15 This class
-	 *         represents the player's tank.
+	 * @author Raymond Ouyang
+	 * 
+	 *         Teacher: Mrs. Krasteva
+	 * 
+	 *         Date: 2023-05-15
+	 * 
+	 *         This class represents the player's tank.
 	 */
-	private class PlayerTank extends Tank {
+	class PlayerTank extends Tank {
 
 		/**
 		 * Can only create one tank
@@ -609,11 +760,45 @@ public class ActionGameLevel extends ActionGamePanel {
 			}
 		}
 
+		/**
+		 * When tank dies
+		 */
+		@Override
+		public void dead() {
+			super.dead();
+			won = false;
+			endGame();
+		}
+
+		/**
+		 * Rewards the player tank
+		 * 
+		 * @return the String that represents the reward
+		 */
+		public String reward() {
+			return "We haven't implemented it yet lol";
+			// TODO
+		}
+
 	}
 
 	/**
-	 * @author Raymond Ouyang Teacher: Mrs. Krasteva Date: 2023-05-15 This class
-	 *         represents an AI tank.
+	 * Rewards the player tank
+	 * 
+	 * @return the String that represents the reward
+	 */
+	public String reward() {
+		return player.reward();
+	}
+
+	/**
+	 * @author Raymond Ouyang
+	 * 
+	 *         Teacher: Mrs. Krasteva
+	 * 
+	 *         Date: 2023-05-15
+	 * 
+	 *         This class represents an AI tank.
 	 */
 	private class AITank extends Tank {
 
@@ -632,14 +817,33 @@ public class ActionGameLevel extends ActionGamePanel {
 			super.move();
 			Direction curDir = new Direction(player.getX() - this.getX(), player.getY() - this.getY());
 			super.setDirection(curDir);
-			super.move(curDir);
+			if (super.getHealth() < 0.35 * TANK_HEALTH) {
+				super.move(curDir.rotateMore(Math.PI));
+			} else {
+				super.move(curDir);
+			}
 			super.shoot();
+		}
+
+		/**
+		 * When tank dies
+		 */
+		@Override
+		public void dead() {
+			super.dead();
+			won = true;
+			endGame();
 		}
 	}
 
 	/**
-	 * @author Raymond Ouyang Teacher: Mrs. Krasteva Date: 2023-05-15 This class
-	 *         represents a bullet.
+	 * @author Raymond Ouyang
+	 * 
+	 *         Teacher: Mrs. Krasteva
+	 * 
+	 *         Date: 2023-05-15
+	 * 
+	 *         This class represents a bullet.
 	 */
 	private class Bullet extends Moveable {
 
@@ -668,6 +872,7 @@ public class ActionGameLevel extends ActionGamePanel {
 		public void move() {
 			super.move();
 			super.move(direction);
+			super.health--;
 		}
 
 		/**

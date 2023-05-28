@@ -50,6 +50,7 @@ public class GameMain extends JFrame {
 			setVisible(true);
 			Runnable displayAll = () -> {
 				try {
+					System.out.println(currentState);
 					State newState = currentPanel.display();
 					if (newState != currentState) {
 						currentState = newState;
@@ -57,6 +58,7 @@ public class GameMain extends JFrame {
 					}
 				} catch (Throwable t) {
 					t.printStackTrace();
+					System.out.println("You have broken the terms of service.\nOur lawyers will be with you shortly.");
 					System.exit(0);
 				}
 			};
