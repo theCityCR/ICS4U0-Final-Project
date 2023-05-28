@@ -730,19 +730,10 @@ public class ActionGameLevel extends ActionGamePanel {
 	class PlayerTank extends Tank {
 
 		/**
-		 * Can only create one tank
-		 */
-		private static boolean tankCreated = false;
-
-		/**
 		 * Creates new player tank
 		 */
 		public PlayerTank() {
 			super(Color.BLUE, 150, 400, 40, 3);
-			if (tankCreated) {
-				throw new IllegalStateException("The PlayerTank class can only be instantiated once in one game.");
-			}
-			tankCreated = true;
 		}
 
 		/**

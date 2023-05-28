@@ -9,8 +9,7 @@ public class SplashScreen extends GamePanel {
 
 	@Override
 	public State display() {
-		// TODO Auto-generated method stub
-		return null;
+		return State.MENU;
 	}
 
 }

@@ -67,6 +67,7 @@ public class GameMain extends JFrame {
 			ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
 			executor.scheduleAtFixedRate(displayAll, 0L, REFRESH_TIME, TimeUnit.MILLISECONDS);
 		} catch (Throwable t) {
+			t.printStackTrace();
 			System.out.println("You have broken the terms of service.\nOur lawyers will be with you shortly.");
 			System.exit(0);
 		}
