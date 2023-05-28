@@ -51,6 +51,8 @@ public class GameMain extends JFrame {
 			Runnable displayAll = () -> {
 				try {
 					System.out.println(currentState);
+					System.out.println(getContentPane());
+					System.out.println(getContentPane().getClass());
 					State newState = currentPanel.display();
 					if (newState != currentState) {
 						currentState = newState;

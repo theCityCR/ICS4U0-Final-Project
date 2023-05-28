@@ -5,7 +5,7 @@ import java.awt.event.*;
 import javax.swing.*;
 
 
-@SuppressWarnings("serial")
+@SuppressWarnings({"serial", "unused"})
 public class LearnLevel extends GamePanel {
 	private State returnState;
 	private String currentState;

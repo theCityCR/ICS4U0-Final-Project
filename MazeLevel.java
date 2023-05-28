@@ -6,7 +6,7 @@ import javax.imageio.ImageIO;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.util.Arrays;
-@SuppressWarnings("serial")
+@SuppressWarnings({"serial", "unused"})
 public class MazeLevel extends GamePanel {
 	/**
 	 * An 2d array of rooms containing all of the rooms.

@@ -27,12 +27,12 @@ public class ActionGameLevel extends ActionGamePanel {
 	/**
 	 * Min frames before AI gives insult
 	 */
-	public static final int FRAMES_MIN = 999150;
+	public static final int FRAMES_MIN = 150;
 	
 	/**
 	 * Max frames before AI gives insult
 	 */
-	public static final int FRAMES_MAX = 999500;
+	public static final int FRAMES_MAX = 500;
 
 	/**
 	 * Size of tank
