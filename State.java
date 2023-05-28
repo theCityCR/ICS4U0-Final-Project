@@ -8,7 +8,7 @@ package culminating;
  */
 
 public enum State {
-	MENU, LEARN, MAZE, ACTION, EXIT;
+	SPLASH, MENU, LEARN, MAZE, ACTION, EXIT;
 	
 	/**
 	 * Gets a new instance of the object represented by this enum. 
@@ -17,6 +17,8 @@ public enum State {
 	 */
 	public GamePanel getNew() {
 		switch (this) {
+		case SPLASH:
+			return new SplashScreen();
 		case MENU:
 			return new GameMenu();
 		case LEARN:

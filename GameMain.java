@@ -45,13 +45,13 @@ public class GameMain extends JFrame {
 			setSize(800, 500);
 			setResizable(false);
 			setDefaultCloseOperation(EXIT_ON_CLOSE);
-			currentState = State.MENU;
+			currentState = State.SPLASH;
 			addNew();
 			setVisible(true);
 			Runnable displayAll = () -> {
 				try {
 					System.out.println(currentState);
-					System.out.println(getContentPane());
+//					System.out.println(getContentPane());
 					System.out.println(getContentPane().getClass());
 					State newState = currentPanel.display();
 					if (newState != currentState) {
@@ -76,6 +76,8 @@ public class GameMain extends JFrame {
 	 * Adds the new panel
 	 */
 	private void addNew() {
+		setSize(800, 501);
+		setSize(800, 500);
 		currentPanel = currentState.getNew();
 		setContentPane(currentPanel);
 		repaint();

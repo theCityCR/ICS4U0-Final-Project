@@ -52,7 +52,7 @@ public class MazeLevel extends GamePanel {
 	public State display() {
 		// TODO Auto-generated method stub
 		repaint();
-		return State.MAZE;
+		return State.ACTION;
 	}
 	public void paintComponent(Graphics g) {
 		paintRoom(g);
