@@ -1,12 +1,25 @@
 package culminating;
+
 import java.awt.*;
+
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.util.Arrays;
-@SuppressWarnings({"serial", "unused"})
+
+/**
+ * @author Raymond Ouyang
+ * 
+ *         Teacher: Mrs. Krasteva
+ * 
+ *         Date: 2023-05-15
+ * 
+ *         This class is the maze level.
+ */
+
+@SuppressWarnings({ "serial", "unused" })
 public class MazeLevel extends GamePanel {
 	/**
 	 * An 2d array of rooms containing all of the rooms.
@@ -20,18 +33,20 @@ public class MazeLevel extends GamePanel {
 	 * used for navigating the rooms array
 	 */
 	private int[] coords;
-	
+
 	/**
-	 * 4 states. Exit is on the left, exit is on the right, exit is on the top, exit is on the bottom
+	 * 4 states. Exit is on the left, exit is on the right, exit is on the top, exit
+	 * is on the bottom
 	 */
 	private String exitOfDeadEnd;
-	
+
 	private Image rightRoom;
 	private Image leftRoom;
 	private Image topRoom;
 	private Image bottomRoom;
 	private Image crossroad;
-	private Player p;	
+	private Player p;
+
 	public MazeLevel() {
 		try {
 			rightRoom = ImageIO.read(new File("Right.jpg"));
@@ -43,9 +58,9 @@ public class MazeLevel extends GamePanel {
 			e.printStackTrace();
 		}
 		p = new Player();
-		coords = new int[]{2,4};
+		coords = new int[] { 2, 4 };
 		currentRoom = new Room("crossroad");
-		
+
 	}
 
 	@Override
@@ -54,49 +69,52 @@ public class MazeLevel extends GamePanel {
 		repaint();
 		return State.ACTION;
 	}
+
 	public void paintComponent(Graphics g) {
 		paintRoom(g);
 	}
-	
+
 	public void paintRoom(Graphics g) {
-		if (Arrays.equals(coords, new int[]{2,4}) || Arrays.equals(coords, new int[]{2,3}) || Arrays.equals(coords, new int[]{1,3}) || Arrays.equals(coords, new int[]{1,2})|| Arrays.equals(coords, new int[]{1,1})) {
-			g.drawImage(crossroad,0,0,null);
-		}
-		else {
-			switch(exitOfDeadEnd) {
-			case("Left"):
-				g.drawImage( leftRoom,  0,  0, null);
-				break; 
-			case("Right"):
-				g.drawImage( rightRoom,  0,  0, null);
+		if (Arrays.equals(coords, new int[] { 2, 4 }) || Arrays.equals(coords, new int[] { 2, 3 })
+				|| Arrays.equals(coords, new int[] { 1, 3 }) || Arrays.equals(coords, new int[] { 1, 2 })
+				|| Arrays.equals(coords, new int[] { 1, 1 })) {
+			g.drawImage(crossroad, 0, 0, null);
+		} else {
+			switch (exitOfDeadEnd) {
+			case ("Left"):
+				g.drawImage(leftRoom, 0, 0, null);
 				break;
-			case("Up"):
-				g.drawImage( topRoom,  0,  0, null);
+			case ("Right"):
+				g.drawImage(rightRoom, 0, 0, null);
 				break;
-			case("Down"):
-				g.drawImage( bottomRoom,  0,  0, null);
+			case ("Up"):
+				g.drawImage(topRoom, 0, 0, null);
+				break;
+			case ("Down"):
+				g.drawImage(bottomRoom, 0, 0, null);
 				break;
 			}
 		}
-		g.drawImage(p.getAvatar(),p.getx(),p.gety(),null);
+		g.drawImage(p.getAvatar(), p.getx(), p.gety(), null);
 	}
-	
+
 	class Room {
 		private int[][] boundaries;
+
 		public Room(String roomType) {
 			// code for reading files
 		}
-		
+
 		public int[][] getBoundaries() {
 			return boundaries;
 		}
 	}
-	
+
 	class Player {
 		private int x;
 		private int y;
 		private Image avatar;
-		
+
 		public Player() {
 			x = 0;
 			y = 0;
@@ -107,14 +125,15 @@ public class MazeLevel extends GamePanel {
 				e.printStackTrace();
 			}
 		}
-		
+
 		/**
-		 *  When wasd or the arrow keys are pressed, the user is moved
+		 * When wasd or the arrow keys are pressed, the user is moved
+		 * 
 		 * @param e the KeyEvent
 		 */
 		void keyPressed(KeyEvent e) {
-			System.out.println(x+" "+y);
-			switch (e.getKeyCode()) { 
+			System.out.println(x + " " + y);
+			switch (e.getKeyCode()) {
 			case KeyEvent.VK_UP:
 			case KeyEvent.VK_W:
 				y -= 2;
@@ -134,33 +153,34 @@ public class MazeLevel extends GamePanel {
 			}
 			repaint();
 		}
-		
+
 		/**
 		 * Checks for collision with the walls
 		 */
 		void checkCollision(Room rm) {
-			for (int[] boundary: rm.getBoundaries()) {
-				//checks if boundaries have been hit
-				
-				//resets boundaries
+			for (int[] boundary : rm.getBoundaries()) {
+				// checks if boundaries have been hit
+
+				// resets boundaries
 			}
 		}
-		
+
 		/**
 		 * checks if the user is close enough for an entrance to change screen
 		 */
 		void checkNextLevel() {
-			//close enough to an exit then tells the paintComponent to repaint to new screen
+			// close enough to an exit then tells the paintComponent to repaint to new
+			// screen
 		}
-		
+
 		int getx() {
 			return x;
 		}
-		
+
 		int gety() {
 			return y;
 		}
-		
+
 		Image getAvatar() {
 			return avatar;
 		}

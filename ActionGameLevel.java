@@ -1,12 +1,5 @@
 package culminating;
 
-/**
- * @author Raymond Ouyang
- * Teacher: Mrs. Krasteva
- * Date: 2023-05-15
- * This class is the actual game of the action level. 
- */
-
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -20,6 +13,16 @@ import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 
 import javax.swing.JLabel;
+
+/**
+ * @author Raymond Ouyang
+ * 
+ *         Teacher: Mrs. Krasteva
+ * 
+ *         Date: 2023-05-15
+ * 
+ *         This class is the game of the action level.
+ */
 
 @SuppressWarnings("serial")
 public class ActionGameLevel extends ActionGamePanel {
@@ -192,8 +195,14 @@ public class ActionGameLevel extends ActionGamePanel {
 	 */
 	private boolean ended;
 	
+	/**
+	 * Frames to wait
+	 */
 	private int framesWait;
 	
+	/**
+	 * Current instance
+	 */
 	private static ActionGameLevel curInstance;
 
 	/**
@@ -203,6 +212,9 @@ public class ActionGameLevel extends ActionGamePanel {
 		return curInstance;
 	}
 	
+	/**
+	 * Whether won
+	 */
 	private static Boolean won;
 
 	/**
@@ -330,6 +342,9 @@ public class ActionGameLevel extends ActionGamePanel {
 		});
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void init() {
 		left = false;
@@ -402,7 +417,7 @@ public class ActionGameLevel extends ActionGamePanel {
 	 * 
 	 *         This class represents a direction. This class is immutable.
 	 */
-	private final class Direction {
+	final class Direction {
 
 		/**
 		 * The direction
@@ -468,7 +483,7 @@ public class ActionGameLevel extends ActionGamePanel {
 	 * 
 	 *         This class represents something that can move.
 	 */
-	private abstract class Moveable {
+	abstract class Moveable {
 
 		/**
 		 * color of player
@@ -629,7 +644,7 @@ public class ActionGameLevel extends ActionGamePanel {
 	 * 
 	 *         This class represents a tank. Shoots bullets.
 	 */
-	private class Tank extends Moveable {
+	class Tank extends Moveable {
 
 		/**
 		 * Reload of tank
@@ -791,7 +806,7 @@ public class ActionGameLevel extends ActionGamePanel {
 	 * 
 	 *         This class represents an AI tank.
 	 */
-	private class AITank extends Tank {
+	class AITank extends Tank {
 
 		/**
 		 * Creates a new AITank object
@@ -836,7 +851,7 @@ public class ActionGameLevel extends ActionGamePanel {
 	 * 
 	 *         This class represents a bullet.
 	 */
-	private class Bullet extends Moveable {
+	class Bullet extends Moveable {
 
 		/**
 		 * The direction the bullet is going

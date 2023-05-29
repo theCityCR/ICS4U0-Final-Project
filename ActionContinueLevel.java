@@ -8,23 +8,49 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+/**
+ * @author Raymond Ouyang
+ * 
+ *         Teacher: Mrs. Krasteva
+ * 
+ *         Date: 2023-05-15
+ * 
+ *         This class is the continue sign of the action level.
+ */
+
 @SuppressWarnings("serial")
 public class ActionContinueLevel extends ActionGamePanel {
 
+	/**
+	 * Represents the current panel
+	 */
 	private JPanel curPanel;
+	
+	/**
+	 * What to return
+	 */
 	private ActionState ret;
 
+	/**
+	 * Creates a new ActionContinueLevel object
+	 */
 	public ActionContinueLevel() {
 		ret = ActionState.GAME;
 		curPanel = new JPanel();
 		this.add(curPanel);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public ActionState display() {
 		return ret;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void init() {
 		this.remove(curPanel);

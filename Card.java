@@ -1,5 +1,10 @@
 package culminating;
 
+/**
+ * 
+ * @author Alex Li
+ *
+ */
 public class Card {
     private String info;
     private Boolean read;

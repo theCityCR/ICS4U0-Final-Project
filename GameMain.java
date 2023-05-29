@@ -1,18 +1,21 @@
 package culminating;
 
-/**
- * @author Raymond Ouyang
- * Teacher: Mrs. Krasteva
- * Date: 2023-05-15
- * This class runs the actual game through the other panels. 
- */
-
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
+
+/**
+ * @author Raymond Ouyang
+ * 
+ * Teacher: Mrs. Krasteva
+ * 
+ * Date: 2023-05-15
+ * 
+ * This class is a framework for what a class that is a panel representing action game should look like. 
+ */
 
 @SuppressWarnings("serial")
 public class GameMain extends JFrame {
@@ -50,9 +53,6 @@ public class GameMain extends JFrame {
 			setVisible(true);
 			Runnable displayAll = () -> {
 				try {
-					System.out.println(currentState);
-//					System.out.println(getContentPane());
-					System.out.println(getContentPane().getClass());
 					State newState = currentPanel.display();
 					if (newState != currentState) {
 						currentState = newState;

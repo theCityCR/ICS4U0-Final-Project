@@ -70,6 +70,9 @@ public class ActionDialogueLevel extends ActionGamePanel {
 					"Your words say more about you than me.", "I'm not sorry if I've done something to upset you.",
 					"You're right, I'll never amount to anything." } };
 
+	/**
+	 * The font size
+	 */
 	public static final int FONT_SIZE = 20;
 
 	/**
@@ -84,12 +87,24 @@ public class ActionDialogueLevel extends ActionGamePanel {
 		return rightRatio;
 	}
 
+	/**
+	 * Answers gotten right
+	 */
 	private static double answersRight;
 	
+	/**
+	 * Answers gotten wrong
+	 */
 	private static double answersWrong;
 
+	/**
+	 * Contains all the questions
+	 */
 	private Stack<Question> questions;
 
+	/**
+	 * What to show
+	 */
 	private static String toShow;
 
 	/**
@@ -99,6 +114,9 @@ public class ActionDialogueLevel extends ActionGamePanel {
 		return toShow;
 	}
 
+	/**
+	 * Creates a new ActionDialogueLevel object
+	 */
 	public ActionDialogueLevel() {
 		rightRatio = Double.NaN;
 		answersRight = 0;
@@ -113,6 +131,9 @@ public class ActionDialogueLevel extends ActionGamePanel {
 		Collections.shuffle(questions);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public ActionState display() {
 		if (questions.isEmpty()) {
@@ -129,7 +150,10 @@ public class ActionDialogueLevel extends ActionGamePanel {
 			}
 		}
 	}
-
+	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void init() {
 		if (!questions.isEmpty()) {
@@ -148,12 +172,36 @@ public class ActionDialogueLevel extends ActionGamePanel {
 	 */
 	private class Question {
 
+		/**
+		 * The question
+		 */
 		private JPanel question;
+		
+		/**
+		 * The answers
+		 */
 		private JButton[] answers;
+		
+		/**
+		 * Whether user got question right
+		 */
 		private Boolean right;
+		
+		/**
+		 * The label containing the question
+		 */
 		private JLabel label;
+		
+		/**
+		 * The index of the answer
+		 */
 		private int answer;
 
+		/**
+		 * Creates a new question object
+		 * 
+		 * @param info	information
+		 */
 		public Question(String[] info) {
 			String labelText = String.format("<html><div style=\"width:%dpx; text-align:center;\">%s</div></html>", 400,
 					"Your opponent says: \"<i>" + info[0] + "</i>\".<br>What is your response?");
@@ -175,6 +223,9 @@ public class ActionDialogueLevel extends ActionGamePanel {
 			}
 		}
 
+		/**
+		 * Initializes the question
+		 */
 		public void init() {
 			question.setPreferredSize(new Dimension(800, 500));
 			question.setBackground(Color.WHITE);
@@ -197,6 +248,11 @@ public class ActionDialogueLevel extends ActionGamePanel {
 			ActionDialogueLevel.this.add(question);
 		}
 
+		/**
+		 * Checks if user tried
+		 * 
+		 * @return	null if user didn't answer, answer otherwise
+		 */
 		public String move() {
 			if (right != null) {
 				ActionDialogueLevel.this.removeAll();

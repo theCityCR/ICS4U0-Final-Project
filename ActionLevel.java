@@ -3,8 +3,13 @@ package culminating;
 import java.awt.FlowLayout;
 
 /**
- * @author Raymond Ouyang Teacher: Mrs. Krasteva Date: 2023-05-15 This class
- *         manages all the sub action levels.
+ * @author Raymond Ouyang
+ * 
+ *         Teacher: Mrs. Krasteva
+ * 
+ *         Date: 2023-05-15
+ * 
+ *         This class is the action level.
  */
 
 @SuppressWarnings("serial")
@@ -20,6 +25,9 @@ public class ActionLevel extends GamePanel {
 	 */
 	private ActionGamePanel currentPanel;
 
+	/**
+	 * Contains all panels
+	 */
 	private ActionGamePanel[] allPanels;
 
 	/**
@@ -40,7 +48,6 @@ public class ActionLevel extends GamePanel {
 	 */
 	@Override
 	public State display() {
-		System.out.println(currentState);
 		ActionState newState = currentPanel.display();
 		if (newState != currentState) {
 			if (newState == ActionState.NEXT) {
@@ -63,9 +70,13 @@ public class ActionLevel extends GamePanel {
 		add(currentPanel);
 		repaint();
 	}
-	
-	
 
+	/**
+	 * Gets new action
+	 * 
+	 * @param as	the ActionState representing the panel
+	 * @return		the panel
+	 */
 	private ActionGamePanel getNew(ActionState as) {
 		switch (as) {
 		case INSTRUCTION:

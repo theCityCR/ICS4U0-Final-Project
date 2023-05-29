@@ -1,18 +1,22 @@
 package culminating;
 
-/**
- * @author Raymond Ouyang
- * Teacher: Mrs. Krasteva
- * Date: 2023-05-15
- * This class displays the instructions about the action level to the user. 
- */
-
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+
+/**
+ * @author Raymond Ouyang
+ * 
+ *         Teacher: Mrs. Krasteva
+ * 
+ *         Date: 2023-05-15
+ * 
+ *         This class is a framework for what a class that is a panel
+ *         representing action game should look like.
+ */
 
 @SuppressWarnings("serial")
 public class ActionInstructionLevel extends ActionGamePanel {

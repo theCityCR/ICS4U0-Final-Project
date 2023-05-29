@@ -9,6 +9,16 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * @author Raymond Ouyang
+ * 
+ *         Teacher: Mrs. Krasteva
+ * 
+ *         Date: 2023-05-15
+ * 
+ *         This class is the learn level.
+ */
+
 @SuppressWarnings("serial")
 public class LearnLevel extends GamePanel implements MouseListener {
 	/**
@@ -70,6 +80,7 @@ public class LearnLevel extends GamePanel implements MouseListener {
 		initializeCards();
 		this.addMouseListener(this);
 	}
+
 	/**
 	 * reading in images and lines from a txt
 	 */
@@ -95,6 +106,7 @@ public class LearnLevel extends GamePanel implements MouseListener {
 			}
 		}
 	}
+
 	/**
 	 * initializes instance variables and values related to cards
 	 */
@@ -154,6 +166,7 @@ public class LearnLevel extends GamePanel implements MouseListener {
 
 	/**
 	 * helper method to paint the instructions of the learning level
+	 * 
 	 * @param g
 	 */
 	private void paintInstructions(Graphics g) {

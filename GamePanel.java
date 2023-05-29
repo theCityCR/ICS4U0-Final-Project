@@ -1,15 +1,18 @@
 package culminating;
 
-/**
- * @author Raymond Ouyang
- * Teacher: Mrs. Krasteva
- * Date: 2023-05-15
- * This class is a framework for what a class that is a panel representing entire game should look like. 
- */
-
 import java.awt.Dimension;
 
 import javax.swing.JPanel;
+
+/**
+ * @author Raymond Ouyang
+ * 
+ * Teacher: Mrs. Krasteva
+ * 
+ * Date: 2023-05-15
+ * 
+ * This class is a framework for what a class that is a panel representing entire game should look like. 
+ */
 
 @SuppressWarnings("serial")
 public abstract class GamePanel extends JPanel {

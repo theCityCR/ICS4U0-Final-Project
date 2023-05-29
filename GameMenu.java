@@ -6,9 +6,12 @@ import javax.swing.*;
 
 /**
  * @author Alex Li
+ * 
  * Teacher: Mrs. Krasteva
+ * 
  * Date: 2023-05-15
  * 
+ * This class is the menu level. 
  */
 
 @SuppressWarnings("serial")

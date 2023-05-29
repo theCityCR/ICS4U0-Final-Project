@@ -1,6 +1,7 @@
 package culminating;
 
 import java.awt.FlowLayout;
+import java.awt.Font;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -18,8 +19,11 @@ import javax.swing.JLabel;
 @SuppressWarnings("serial")
 public class ActionEndLevel extends ActionGamePanel {
 
+	/**
+	 * What to return
+	 */
 	private ActionState toRet;
-	
+
 	/**
 	 * Creates a new ActionEndLevel
 	 */
@@ -28,6 +32,9 @@ public class ActionEndLevel extends ActionGamePanel {
 		toRet = ActionState.END;
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void init() {
 		String label = "";
@@ -39,9 +46,9 @@ public class ActionEndLevel extends ActionGamePanel {
 		} else {
 			label = "Unfortunately, you have been defeated by the AI.";
 		}
-		JLabel l = new JLabel(String.format("<html><div style=\"width:%dpx; text-align:center;\">%s</div></html>",
-				400, label));
-		
+		JLabel l = new JLabel(
+				String.format("<html><div style=\"width:%dpx; text-align:center;\">%s</div></html>", 400, label));
+
 		String ano = "";
 		double percent = ActionDialogueLevel.getRightRatio();
 		if (Double.isNaN(percent)) {
@@ -49,14 +56,18 @@ public class ActionEndLevel extends ActionGamePanel {
 		} else {
 			ano = String.format("You correctly responded to %d%% of the insults.", (int) Math.round(100 * percent));
 		}
-		JLabel j = new JLabel(String.format("<html><div style=\"width:%dpx; text-align:center;\">%s</div></html>",
-				400, ano));
-		
+		JLabel j = new JLabel(
+				String.format("<html><div style=\"width:%dpx; text-align:center;\">%s</div></html>", 400, ano));
+
 		JButton button = new JButton("Continue →");
 		button.addActionListener(e -> {
 			toRet = ActionState.NEXT;
 		});
-		
+
+		l.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 25));
+		j.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 25));
+		button.setFont(new Font(Font.MONOSPACED, Font.BOLD, 25));
+
 		this.add(l);
 		this.add(j);
 		this.add(button);
