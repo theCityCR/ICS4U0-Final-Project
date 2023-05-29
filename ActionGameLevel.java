@@ -11,6 +11,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
+import java.util.Random;
 
 import javax.swing.JLabel;
 
@@ -403,7 +404,7 @@ public class ActionGameLevel extends ActionGamePanel {
 				m.paint(g);
 			}
 		} catch (ConcurrentModificationException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 			repaint();
 		}
 	}
@@ -633,6 +634,41 @@ public class ActionGameLevel extends ActionGamePanel {
 		public double getHealth() {
 			return health;
 		}
+
+		/**
+		 * @param health the health to set
+		 */
+		public void setHealth(double health) {
+			this.health = health;
+		}
+
+		/**
+		 * @return the damage
+		 */
+		public double getDamage() {
+			return damage;
+		}
+
+		/**
+		 * @param damage the damage to set
+		 */
+		public void setDamage(double damage) {
+			this.damage = damage;
+		}
+
+		/**
+		 * @return the speed
+		 */
+		public double getSpeed() {
+			return speed;
+		}
+
+		/**
+		 * @param speed the speed to set
+		 */
+		public void setSpeed(double speed) {
+			this.speed = speed;
+		}
 	}
 
 	/**
@@ -670,8 +706,8 @@ public class ActionGameLevel extends ActionGamePanel {
 		 * @param reload reload of tank
 		 * @param speed  speed of tank
 		 */
-		public Tank(Color player, double x, double y, int reload, double speed) {
-			super(player, x, y, TANK_SIZE, TANK_DAMAGE, TANK_HEALTH, speed);
+		public Tank(Color player, double x, double y, int reload, double health, double speed) {
+			super(player, x, y, TANK_SIZE, TANK_DAMAGE, health, speed);
 			this.reload = reload;
 			this.nextTime = reload;
 			this.direction = new Direction(1, 0);
@@ -683,7 +719,7 @@ public class ActionGameLevel extends ActionGamePanel {
 		@Override
 		public void move() {
 			super.move();
-			super.health = Math.min(TANK_HEALTH, super.getHealth() + 1);
+			setHealth(Math.min(TANK_HEALTH, super.getHealth() + 1));
 			nextTime--;
 		}
 
@@ -748,7 +784,7 @@ public class ActionGameLevel extends ActionGamePanel {
 		 * Creates new player tank
 		 */
 		public PlayerTank() {
-			super(Color.BLUE, 150, 400, 40, 3);
+			super(Color.BLUE, 150, 400, 40, TANK_HEALTH, 3);
 		}
 
 		/**
@@ -782,7 +818,32 @@ public class ActionGameLevel extends ActionGamePanel {
 		 * @return the String that represents the reward
 		 */
 		public String reward() {
-			return "We haven't implemented it yet lol";
+			Random r = new Random();
+			int rand = r.nextInt(4);
+			int increase = r.nextInt(15, 25);
+			double ip = 1 + (increase / 100.0);
+			String message = "Something went wrong. Please hold on.";
+			switch (rand) {
+			case 0:
+				super.reload /= ip;
+				message = "Reload";
+				break;
+			case 1:
+				setHealth(getHealth() * ip);
+				message = "Health";
+				break;
+			case 2:
+				setDamage(getDamage() * ip);
+				message = "Body damage";
+				break;
+			case 3:
+				setSpeed(getSpeed() * ip);
+				message = "Movement speed";
+				break;
+			default:
+				throw new ConcurrentModificationException("rand was changed what???");
+			}
+			return message + " was increased by " + increase + "%";
 			// TODO
 		}
 
@@ -812,7 +873,7 @@ public class ActionGameLevel extends ActionGamePanel {
 		 * Creates a new AITank object
 		 */
 		public AITank() {
-			super(Color.RED, 650, 400, 30, 2);
+			super(Color.RED, 650, 400, 20, 10 * TANK_HEALTH, 2);
 		}
 
 		/**
@@ -878,7 +939,7 @@ public class ActionGameLevel extends ActionGamePanel {
 		public void move() {
 			super.move();
 			super.move(direction);
-			super.health--;
+			setHealth(getHealth() - 1);
 		}
 
 		/**

@@ -235,14 +235,18 @@ public class ActionDialogueLevel extends ActionGamePanel {
 			idkMan.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 50));
 			idkMan.add(label);
 			question.add(idkMan);
+			JPanel j = new JPanel();
 			JPanel p = new JPanel();
-			p.setLayout(new GridLayout(2, 2));
+			j.setLayout(new GridLayout(2, 2, 10, 10));
 			for (JButton jb : answers) {
 				jb.addActionListener(e -> {
 					right = answers[answer] == e.getSource();
 				});
-				p.add(jb);
+				j.add(jb);
 			}
+			p.setLayout(null);
+			j.setBounds(10, 10, 780, 240);
+			p.add(j);
 			p.setBounds(0, 200, 800, 260);
 			question.add(p);
 			ActionDialogueLevel.this.add(question);

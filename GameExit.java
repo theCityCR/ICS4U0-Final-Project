@@ -1,6 +1,7 @@
 package culminating;
 
 import java.awt.FlowLayout;
+import java.awt.Font;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -48,8 +49,10 @@ public class GameExit extends GamePanel {
 		this.setLayout(new FlowLayout(FlowLayout.CENTER, 1000, 50));
 
 		notice = new JLabel();
+		notice.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 30));
 		JButton button = new JButton("Exit Now");
 		button.addActionListener(e -> toEnd = true);
+		button.setFont(new Font(Font.MONOSPACED, Font.BOLD, 30));
 
 		this.add(notice);
 		this.add(button);
@@ -61,7 +64,8 @@ public class GameExit extends GamePanel {
 	@Override
 	public State display() {
 		time--;
-		notice.setText("The game will automatically exit in " + ((time / 50) + 1) + " second(s).");
+		notice.setText(String.format("<html><div style=\"width:%dpx; text-align:center;\">%s</div></html>",
+				400, String.format("The game will automatically exit in %d second(s).", (time / 50) + 1)));
 		repaint();
 		if (time == 0 || toEnd) {
 			System.exit(0);
