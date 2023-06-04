@@ -88,9 +88,9 @@ public class GameMenu extends GamePanel {
 		}
 		else {
 			paintMain(g);
-			previousState = "mains";
+			previousState = "main";
 		}
-		if (previousState.equals(state))
+		if (previousState.equals(state) && state.equals("splash"))
 			removeAll();
 		
 	}
@@ -112,6 +112,10 @@ public class GameMenu extends GamePanel {
 		
 		
 //		System.out.println("this");
+		if (framesDone == 250){
+			framesDone = 0;
+			state = "main";
+		}
 	}
 	/**
 	* Paints the main screen of the GameMenu
