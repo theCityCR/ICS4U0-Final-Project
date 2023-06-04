@@ -16,16 +16,46 @@ import javax.swing.*;
 
 @SuppressWarnings("serial")
 public class GameMenu extends GamePanel {
+	/**
+	* The current screen of the GameMenu, either splash or main
+	*/
 	private String state;
+	/**
+	* The level that the display method should return
+	*/
 	private State returnState;
+	/**
+	* The previous screen of the GameMenu
+	*/
 	private String previousState;
+	/**
+	* Frame counter for the splash screen
+	*/
 	private int framesDone;
+	/**
+	* Learn button
+	*/
 	Button learn = new Button("Learn");
+	/**
+	* Maze button
+	*/
 	Button maze = new Button("Maze");
+	/**
+	* Action button
+	*/
 	Button action = new Button("Action");
+	/**
+	* Exit button
+	*/
 	Button exit = new Button("Exit");
+	/**
+	* Splash button
+	*/
 	Button splash = new Button("Splash");
 	
+	/**
+	* Class constructor
+	*/
 	public GameMenu() {
 		state = "main";
 		previousState = state;
@@ -35,6 +65,9 @@ public class GameMenu extends GamePanel {
 	}
 
 	@Override
+	/**
+	* display method which returns the level the game should be on
+	*/
 	public State display() {
 		if (state == "splash") {
 			framesDone++;
@@ -44,6 +77,9 @@ public class GameMenu extends GamePanel {
 	}
 
 	@Override
+	/**
+	* Paint method of the GameMenu
+	*/
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		if (state == "splash") {
@@ -58,7 +94,9 @@ public class GameMenu extends GamePanel {
 			removeAll();
 		
 	}
-
+	/**
+	* Paints the splash screen
+	*/
 	public void paintSplash(Graphics g) {
 		ImageIcon logo = new ImageIcon("Culminating Company Logo.jpg");
 //		System.out.println(logo.toString());
@@ -75,7 +113,9 @@ public class GameMenu extends GamePanel {
 		
 //		System.out.println("this");
 	}
-
+	/**
+	* Paints the main screen of the GameMenu
+	*/
 	public void paintMain(Graphics g) {
 		JPanel titlePanel = new JPanel();
 		titlePanel.setPreferredSize(new Dimension(800, 100));
