@@ -9,16 +9,6 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-/**
- * @author Raymond Ouyang
- * 
- *         Teacher: Mrs. Krasteva
- * 
- *         Date: 2023-05-15
- * 
- *         This class is the learn level.
- */
-
 @SuppressWarnings("serial")
 public class LearnLevel extends GamePanel implements MouseListener {
 	/**
@@ -74,19 +64,18 @@ public class LearnLevel extends GamePanel implements MouseListener {
 		returnState = State.LEARN;
 		setPreferredSize(new Dimension(800, 500));
 		cardInfo = new ArrayList<String>();
-		currentState = "main";
-		previousState = "main";
+		currentState = "instructions";
+		previousState = "instructions";
 		readInfoFromFile();
 		initializeCards();
 		this.addMouseListener(this);
 	}
-
 	/**
 	 * reading in images and lines from a txt
 	 */
 	private void readInfoFromFile() {
 		File myObj = new File("culminating//research.txt");
-		
+
 		try {
 			checkCard = ImageIO.read(new File("culminating//CheckCard.jpg"));
 			questionCard = ImageIO.read(new File("culminating//questionCard.jpg"));
@@ -106,7 +95,6 @@ public class LearnLevel extends GamePanel implements MouseListener {
 			}
 		}
 	}
-
 	/**
 	 * initializes instance variables and values related to cards
 	 */
@@ -133,7 +121,11 @@ public class LearnLevel extends GamePanel implements MouseListener {
 		} else if (currentState.equals("instructions")) {
 			paintInstructions(g);
 			previousState = "instructions";
-		} else {
+
+		} else if (currentState.equals("final")){
+			paintFinal(g);
+		} 
+		else {
 			paintMain(g);
 		}
 		// if (previousState.equals(currentState))
@@ -166,23 +158,16 @@ public class LearnLevel extends GamePanel implements MouseListener {
 
 	/**
 	 * helper method to paint the instructions of the learning level
-	 * 
 	 * @param g
 	 */
 	private void paintInstructions(Graphics g) {
+		g.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 20));
 		String info = String.format("<html><div style=\"width:%dpx; text-align:center;\">%s</div></html>", 400,
 				"Recruit, welcome to Free Play Frontier! Before we send you to the frontier, you need training! First, you’ll need to learn about Free Play! Free Play is a way to of playing games that combats toxicity in video games. To start learning, click the flash cards on the screen. After clicking the cards, the information on the card will be enlarged, and you can see the information! Clicking the screen again will close it. The card will turn green. Your goal is to turn all the cards green.");
-		JLabel instructionLabel = new JLabel(info);
-		instructionLabel.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 5));
+		g.drawString(info, 200, 50);
 
-		continueButton.setBounds(200, 300, 400, 50);
-		continueButton.addActionListener((ActionEvent e) -> {
-			currentState = "main";
-			removeAll();
-			repaint();
-		});
-		add(continueButton);
-		add(instructionLabel);
+		g.drawString("Continue", 350, 325);
+		g.drawRect(200, 300, 400, 50);
 
 	}
 
@@ -192,11 +177,13 @@ public class LearnLevel extends GamePanel implements MouseListener {
 	 * @param g
 	 */
 	private void paintMain(Graphics g) {
+		cardsFinished = 12;
 		for (int i = 0; i < cardArr.length; i++) {
 			for (int j = 0; j < cardArr[0].length; j++) {
 				// drawing finished card
 				if (cardArr[i][j].getRead()) {
 					g.drawImage(checkCard, j * 200, i * 100, null);
+					cardsFinished++;
 				}
 
 				// drawing unchecked card
@@ -205,10 +192,22 @@ public class LearnLevel extends GamePanel implements MouseListener {
 				}
 			}
 		}
+		if (cardsFinished == 12){
+			g.fillRect(700, 400, 75, 50);
+			g.setColor(Color.WHITE);
+			g.drawString("CONTINUE", 730, 400);
+		}
 	}
 
 	public void paintFinal(Graphics g) {
-
+		g.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 20));
+		System.out.println("Final");
+		String info = "Congratulations recruit! You've finished the learning level. Now, we are sending you to complete the maze.";
+		g.drawString(info, 200, 100);
+		g.drawString("CONTINUE", 250, 340);
+		g.drawString("MAIN MENU", 465, 340);
+		g.drawRect(200, 300, 175, 65);
+		g.drawRect(425, 300, 175, 65);
 	}
 
 	@Override
@@ -231,9 +230,29 @@ public class LearnLevel extends GamePanel implements MouseListener {
 				removeAll();
 				cardArr[row][column].hasRead();
 			}
+
+			if (cardsFinished == 12){
+				if(x >= 700 && x <= 775 && y >= 400 && y <= 450){
+					currentState = "final";
+					removeAll();
+				}
+			}
 		} else if (currentState == "card") {
 			currentState = "main";
 
+		}
+		else if (currentState == "instructions"){
+			if (x >= 200 && x <= 600 && y >= 300 && y <= 350){
+				currentState = "main";
+			}
+		}
+		else if  (currentState == "final"){
+			if ( x >= 200 &&  x <= 375 && y >=300 && y <=365){
+				returnState = State.MAZE;
+			}
+			else if (x >= 425 &&  x <= 600 && y >=175 && y <=365){
+				returnState = State.MENU;
+			}
 		}
 		repaint();
 	}
