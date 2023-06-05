@@ -2,8 +2,12 @@ package culminating;
 
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 
@@ -54,6 +58,19 @@ public class ActionInstructionLevel extends ActionGamePanel {
 	@Override
 	public ActionState display() {
 		return willContinue ? ActionState.GAME : ActionState.INSTRUCTION;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		try {
+			g.drawImage(ImageIO.read(new File("src/culminating/ActionInstructionScreenBackground.jpg")), 0, 0, 800, 500, 0, 0, 800, 500, null);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

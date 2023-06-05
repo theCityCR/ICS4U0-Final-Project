@@ -86,7 +86,7 @@ public class LearnLevel extends GamePanel implements MouseListener {
 	 */
 	private void readInfoFromFile() {
 		File myObj = new File("culminating//research.txt");
-
+		
 		try {
 			checkCard = ImageIO.read(new File("culminating//CheckCard.jpg"));
 			questionCard = ImageIO.read(new File("culminating//questionCard.jpg"));

@@ -9,10 +9,13 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.Random;
 
+import javax.imageio.ImageIO;
 import javax.swing.JLabel;
 
 /**
@@ -32,11 +35,11 @@ public class ActionGameLevel extends ActionGamePanel {
 	 * Min frames before AI gives insult
 	 */
 	public static final int FRAMES_MIN = 150;
-	
+
 	/**
 	 * Max frames before AI gives insult
 	 */
-	public static final int FRAMES_MAX = 500;
+	public static final int FRAMES_MAX = 50000000;
 
 	/**
 	 * Size of tank
@@ -195,12 +198,12 @@ public class ActionGameLevel extends ActionGamePanel {
 	 * Whether the game has ended
 	 */
 	private boolean ended;
-	
+
 	/**
 	 * Frames to wait
 	 */
 	private int framesWait;
-	
+
 	/**
 	 * Current instance
 	 */
@@ -212,7 +215,7 @@ public class ActionGameLevel extends ActionGamePanel {
 	static ActionGameLevel getCurInstance() {
 		return curInstance;
 	}
-	
+
 	/**
 	 * Whether won
 	 */
@@ -248,7 +251,7 @@ public class ActionGameLevel extends ActionGamePanel {
 		instructions.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 30));
 		instructions.setVisible(false);
 		add(instructions);
-		
+
 		framesWait = (int) (Math.random() * (FRAMES_MAX - FRAMES_MIN)) + FRAMES_MIN;
 		ended = false;
 
@@ -342,7 +345,7 @@ public class ActionGameLevel extends ActionGamePanel {
 
 		});
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -375,9 +378,10 @@ public class ActionGameLevel extends ActionGamePanel {
 		toRemove.clear();
 		toAdd.clear();
 		repaint();
-		framesWait --;
+		framesWait--;
 		if (framesWait < 0) {
-			framesWait = (int) (Math.random() * (FRAMES_MAX - FRAMES_MIN)) + FRAMES_MIN;;
+			framesWait = (int) (Math.random() * (FRAMES_MAX - FRAMES_MIN)) + FRAMES_MIN;
+			;
 			return ActionState.DIALOGUE;
 		}
 		if (ended) {
@@ -399,6 +403,13 @@ public class ActionGameLevel extends ActionGamePanel {
 	@Override
 	public void paintComponent(Graphics g) {
 		g.clearRect(0, 0, 800, 500);
+		super.paintComponent(g);
+		try {
+			g.drawImage(ImageIO.read(new File("src/culminating/ActionGameScreenBackground.jpg")), 0, 0, 800, 500, 0,
+					0, 800, 500, null);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		try {
 			for (Moveable m : movers) {
 				m.paint(g);
@@ -564,7 +575,7 @@ public class ActionGameLevel extends ActionGamePanel {
 		public void move(Direction direction) {
 			this.x += direction.moveX(speed);
 			this.y += direction.moveY(speed);
-			if (this.x < 0 || this.x > 800 || this.y < 0 || this.y > 463) {
+			if (this.x < 0 || this.x > 800 || this.y < 0 || this.y > 500) {
 				onBorder();
 			}
 		}
@@ -585,7 +596,7 @@ public class ActionGameLevel extends ActionGamePanel {
 		 */
 		public void onBorder() {
 			this.x = Math.max(0, Math.min(800, this.x));
-			this.y = Math.max(0, Math.min(463, this.y));
+			this.y = Math.max(0, Math.min(500, this.y));
 		}
 
 		/**
@@ -730,7 +741,7 @@ public class ActionGameLevel extends ActionGamePanel {
 		 */
 		@Override
 		public void paint(Graphics g) {
-			g.setColor(Color.GRAY);
+			g.setColor(Color.WHITE);
 			g.fillPolygon(
 					new int[] { (int) (super.getX() + this.direction.rotateMore(RIGHT_ANGLE).moveX(getSize() / 2)),
 							(int) (super.getX() + this.direction.rotateMore(-RIGHT_ANGLE).moveX(getSize() / 2)),
@@ -844,7 +855,6 @@ public class ActionGameLevel extends ActionGamePanel {
 				throw new ConcurrentModificationException("rand was changed what???");
 			}
 			return message + " was increased by " + increase + "%";
-			// TODO
 		}
 
 	}

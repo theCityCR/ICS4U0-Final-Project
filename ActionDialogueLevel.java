@@ -1,15 +1,18 @@
 package culminating;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.GridLayout;
+import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
 
+import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -160,6 +163,19 @@ public class ActionDialogueLevel extends ActionGamePanel {
 			questions.peek().init();
 		}
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		try {
+			g.drawImage(ImageIO.read(new File("src/culminating/ActionDialogueScreenBackground.jpg")), 0, 0, 800, 500, 0, 0, 800, 500, null);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 	/**
 	 * @author Raymond Ouyang
@@ -203,7 +219,7 @@ public class ActionDialogueLevel extends ActionGamePanel {
 		 * @param info	information
 		 */
 		public Question(String[] info) {
-			String labelText = String.format("<html><div style=\"width:%dpx; text-align:center;\">%s</div></html>", 400,
+			String labelText = String.format("<html><div style=\"width:%dpx; text-align:center; color:white;\">%s</div></html>", 400,
 					"Your opponent says: \"<i>" + info[0] + "</i>\".<br>What is your response?");
 			label = new JLabel(labelText);
 			label.setFont(new Font(Font.MONOSPACED, Font.BOLD, FONT_SIZE + 5));
@@ -228,12 +244,12 @@ public class ActionDialogueLevel extends ActionGamePanel {
 		 */
 		public void init() {
 			question.setPreferredSize(new Dimension(800, 500));
-			question.setBackground(Color.WHITE);
 			question.setLayout(null);
 			JPanel idkMan = new JPanel();
 			idkMan.setBounds(0, 0, 800, 200);
 			idkMan.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 50));
 			idkMan.add(label);
+			idkMan.setOpaque(false);
 			question.add(idkMan);
 			JPanel j = new JPanel();
 			JPanel p = new JPanel();
@@ -245,10 +261,13 @@ public class ActionDialogueLevel extends ActionGamePanel {
 				j.add(jb);
 			}
 			p.setLayout(null);
-			j.setBounds(10, 10, 780, 240);
+			j.setBounds(10, 10, 780, 280);
+			j.setOpaque(false);
 			p.add(j);
-			p.setBounds(0, 200, 800, 260);
+			p.setBounds(0, 200, 800, 300);
+			p.setOpaque(false);
 			question.add(p);
+			question.setOpaque(false);
 			ActionDialogueLevel.this.add(question);
 		}
 
