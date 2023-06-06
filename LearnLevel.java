@@ -193,16 +193,17 @@ public class LearnLevel extends GamePanel implements MouseListener {
 			}
 		}
 		if (cardsFinished == 12){
+			g.setColor(Color.GREEN);
 			g.fillRect(700, 400, 75, 50);
 			g.setColor(Color.WHITE);
-			g.drawString("CONTINUE", 730, 400);
+			g.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 15));
+			g.drawString("CONTINUE", 705, 430);
 		}
 	}
 
 	public void paintFinal(Graphics g) {
 		g.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 20));
-		System.out.println("Final");
-		String info = "Congratulations recruit! You've finished the learning level. Now, we are sending you to complete the maze.";
+		String info = "Congratulations recruit! \nYou've finished the learning level.\n Now, we are sending you to complete the maze.";
 		g.drawString(info, 200, 100);
 		g.drawString("CONTINUE", 250, 340);
 		g.drawString("MAIN MENU", 465, 340);
