@@ -2,6 +2,7 @@ package culminating;
 
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.image.BufferedImage;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -23,6 +24,11 @@ public class ActionEndLevel extends ActionGamePanel {
 	 * What to return
 	 */
 	private ActionState toRet;
+
+	/**
+	 * Background to show
+	 */
+	static BufferedImage background;
 
 	/**
 	 * Creates a new ActionEndLevel

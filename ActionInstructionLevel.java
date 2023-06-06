@@ -4,10 +4,8 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
-import java.io.File;
-import java.io.IOException;
+import java.awt.image.BufferedImage;
 
-import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 
@@ -29,6 +27,11 @@ public class ActionInstructionLevel extends ActionGamePanel {
 	 * Whether user wants to continue
 	 */
 	private boolean willContinue;
+
+	/**
+	 * Background to show
+	 */
+	static BufferedImage background;
 
 	/**
 	 * Creates a new ActionInstructionLevel object
@@ -66,11 +69,7 @@ public class ActionInstructionLevel extends ActionGamePanel {
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		try {
-			g.drawImage(ImageIO.read(new File("src/culminating/ActionInstructionScreenBackground.jpg")), 0, 0, 800, 500, 0, 0, 800, 500, null);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		g.drawImage(background, 0, 0, 800, 500, 0, 0, 800, 500, null);
 	}
 
 }

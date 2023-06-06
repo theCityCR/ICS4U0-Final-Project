@@ -4,10 +4,8 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.io.File;
-import java.io.IOException;
+import java.awt.image.BufferedImage;
 
-import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -29,11 +27,16 @@ public class ActionContinueLevel extends ActionGamePanel {
 	 * Represents the current panel
 	 */
 	private JPanel curPanel;
-	
+
 	/**
 	 * What to return
 	 */
 	private ActionState ret;
+
+	/**
+	 * Background to show
+	 */
+	static BufferedImage background;
 
 	/**
 	 * Creates a new ActionContinueLevel object
@@ -73,18 +76,14 @@ public class ActionContinueLevel extends ActionGamePanel {
 		curPanel.setOpaque(false);
 		this.add(curPanel);
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		try {
-			g.drawImage(ImageIO.read(new File("src/culminating/ActionContinueScreenBackground.jpg")), 0, 0, 800, 500, 0, 0, 800, 500, null);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		g.drawImage(background, 0, 0, 800, 500, 0, 0, 800, 500, null);
 	}
 
 }

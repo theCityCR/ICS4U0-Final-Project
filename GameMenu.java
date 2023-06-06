@@ -51,8 +51,8 @@ public class GameMenu extends GamePanel implements MouseListener {
 
 	public void paintSplash(Graphics g) {
 		ImageIcon logo = new ImageIcon("Culminating Company Logo.jpg");
-		int w = logo.getIconWidth();
-		int h = logo.getIconHeight();
+//		int w = logo.getIconWidth();
+//		int h = logo.getIconHeight();
 		logo.paintIcon(this, g, -500 + framesDone * 3, 50);
 
 		g.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 30));

@@ -9,13 +9,11 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
-import java.io.File;
-import java.io.IOException;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.Random;
 
-import javax.imageio.ImageIO;
 import javax.swing.JLabel;
 
 /**
@@ -39,7 +37,7 @@ public class ActionGameLevel extends ActionGamePanel {
 	/**
 	 * Max frames before AI gives insult
 	 */
-	public static final int FRAMES_MAX = 50000000;
+	public static final int FRAMES_MAX = 500;
 
 	/**
 	 * Size of tank
@@ -229,6 +227,11 @@ public class ActionGameLevel extends ActionGamePanel {
 	}
 
 	/**
+	 * Background to show
+	 */
+	static BufferedImage background;
+
+	/**
 	 * Creates a new ActionGameLevel instance
 	 */
 	public ActionGameLevel() {
@@ -404,12 +407,7 @@ public class ActionGameLevel extends ActionGamePanel {
 	public void paintComponent(Graphics g) {
 		g.clearRect(0, 0, 800, 500);
 		super.paintComponent(g);
-		try {
-			g.drawImage(ImageIO.read(new File("src/culminating/ActionGameScreenBackground.jpg")), 0, 0, 800, 500, 0,
-					0, 800, 500, null);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		g.drawImage(background, 0, 0, 800, 500, 0, 0, 800, 500, null);
 		try {
 			for (Moveable m : movers) {
 				m.paint(g);
