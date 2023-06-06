@@ -1,34 +1,22 @@
 package culminating;
 
 import java.awt.*;
-
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.ImageIcon;
+import javax.swing.KeyStroke;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.util.Arrays;
 
-/**
- * @author Raymond Ouyang
- * 
- *         Teacher: Mrs. Krasteva
- * 
- *         Date: 2023-05-15
- * 
- *         This class is the maze level.
- */
-
-@SuppressWarnings({ "serial", "unused" })
 public class MazeLevel extends GamePanel {
-	/**
-	 * An 2d array of rooms containing all of the rooms.
-	 */
-	private Room[][] rooms;
-	/**
-	 * the room the user is currently in
-	 */
-	private Room currentRoom;
 	/**
 	 * used for navigating the rooms array
 	 */
@@ -46,8 +34,14 @@ public class MazeLevel extends GamePanel {
 	private Image bottomRoom;
 	private Image crossroad;
 	private Player p;
+	private boolean up;
+	private boolean down;
+	private boolean right;
+	private boolean left;
 
 	public MazeLevel() {
+		this.setFocusable(true);
+		grabFocus();
 		try {
 			rightRoom = ImageIO.read(new File("Right.jpg"));
 			leftRoom = ImageIO.read(new File("Left.jpg"));
@@ -59,18 +53,43 @@ public class MazeLevel extends GamePanel {
 		}
 		p = new Player();
 		coords = new int[] { 2, 4 };
-		currentRoom = new Room("crossroad");
+		Action lAction = new LeftAction("Left",null,);
+		getInputMap().put(KeyStroke.getKeyStroke("W"), "doSomething");
+		getActionMap().put("doSomething", lAction);
 
+	}
+
+	class LeftAction extends AbstractAction {
+		private String direction;
+
+		public LeftAction(String text, ImageIcon icon, String desc, Integer mnemonic) {
+			super(text, icon);
+			putValue(SHORT_DESCRIPTION, desc);
+			putValue(MNEMONIC_KEY, mnemonic);
+		}
+
+		public void actionPerformed(ActionEvent e) {
+			if (direction.equals("Left"))
+				p.setx(p.getx() - 2);
+			else if (direction.equals("Right"))
+				p.setx(p.getx() + 2);
+			else if (direction.equals("Up"))
+				p.sety(p.gety() - 2);
+			else if (direction.equals("Down"))
+				p.sety(p.gety() + 2);
+
+		}
 	}
 
 	@Override
 	public State display() {
 		// TODO Auto-generated method stub
 		repaint();
-		return State.ACTION;
+		return State.MAZE;
 	}
 
 	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
 		paintRoom(g);
 	}
 
@@ -96,18 +115,7 @@ public class MazeLevel extends GamePanel {
 			}
 		}
 		g.drawImage(p.getAvatar(), p.getx(), p.gety(), null);
-	}
 
-	class Room {
-		private int[][] boundaries;
-
-		public Room(String roomType) {
-			// code for reading files
-		}
-
-		public int[][] getBoundaries() {
-			return boundaries;
-		}
 	}
 
 	class Player {
@@ -127,41 +135,24 @@ public class MazeLevel extends GamePanel {
 		}
 
 		/**
-		 * When wasd or the arrow keys are pressed, the user is moved
-		 * 
-		 * @param e the KeyEvent
-		 */
-		void keyPressed(KeyEvent e) {
-			System.out.println(x + " " + y);
-			switch (e.getKeyCode()) {
-			case KeyEvent.VK_UP:
-			case KeyEvent.VK_W:
-				y -= 2;
-				break;
-			case KeyEvent.VK_DOWN:
-			case KeyEvent.VK_S:
-				y += 2;
-				break;
-			case KeyEvent.VK_RIGHT:
-			case KeyEvent.VK_D:
-				x += 2;
-				break;
-			case KeyEvent.VK_LEFT:
-			case KeyEvent.VK_A:
-				y -= 2;
-				break;
-			}
-			repaint();
-		}
-
-		/**
 		 * Checks for collision with the walls
 		 */
-		void checkCollision(Room rm) {
-			for (int[] boundary : rm.getBoundaries()) {
-				// checks if boundaries have been hit
+		void checkCollision() {
+			if (Arrays.equals(coords, new int[] { 2, 4 }) || Arrays.equals(coords, new int[] { 2, 3 })
+					|| Arrays.equals(coords, new int[] { 1, 3 }) || Arrays.equals(coords, new int[] { 1, 2 })
+					|| Arrays.equals(coords, new int[] { 1, 1 })) {
 
-				// resets boundaries
+			} else {
+				switch (exitOfDeadEnd) {
+				case ("Left"):
+					break;
+				case ("Right"):
+					break;
+				case ("Up"):
+					break;
+				case ("Down"):
+					break;
+				}
 			}
 		}
 
@@ -171,6 +162,27 @@ public class MazeLevel extends GamePanel {
 		void checkNextLevel() {
 			// close enough to an exit then tells the paintComponent to repaint to new
 			// screen
+			if (x >= 790 && y >= 150 && y <= 250) {
+				exitOfDeadEnd = "Right";
+				coords[1] += 1;
+			} else if (x <= 10 && y >= 150 && y <= 250) {
+				exitOfDeadEnd = "Left";
+				coords[1] += 1;
+			} else if (y >= 490 && x >= 350 && x <= 450) {
+				exitOfDeadEnd = "Up";
+				coords[1] += 1;
+			} else if (y <= 10 && x >= 350 && x <= 450) {
+				exitOfDeadEnd = "Down";
+				coords[1] += 1;
+			}
+		}
+
+		void setx(int value) {
+			x = value;
+		}
+
+		void sety(int value) {
+			y = value;
 		}
 
 		int getx() {
