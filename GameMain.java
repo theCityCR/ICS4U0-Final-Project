@@ -82,7 +82,6 @@ public class GameMain extends JFrame {
 		setSize(800, 540);
 		currentPanel = currentState.getNew();
 		setContentPane(currentPanel);
-		repaint();
 	}
 
 	/**
