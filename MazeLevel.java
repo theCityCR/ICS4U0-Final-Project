@@ -16,6 +16,7 @@ import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.util.Arrays;
 
+@SuppressWarnings("all")
 public class MazeLevel extends GamePanel {
 	/**
 	 * used for navigating the rooms array
@@ -53,7 +54,7 @@ public class MazeLevel extends GamePanel {
 		}
 		p = new Player();
 		coords = new int[] { 2, 4 };
-		Action lAction = new LeftAction("Left",null,);
+		Action lAction = new LeftAction("Left",null,null, null);
 		getInputMap().put(KeyStroke.getKeyStroke("W"), "doSomething");
 		getActionMap().put("doSomething", lAction);
 

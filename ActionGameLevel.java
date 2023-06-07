@@ -329,6 +329,13 @@ public class ActionGameLevel extends ActionGamePanel {
 					mouseDown = false;
 				}
 			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (28 < e.getX() && e.getX() < 78 && 20 < e.getY() && e.getY() < 70) {
+					GameMain.getGame().getCurrentPanel().setToRet(State.MENU);
+				}
+			}
 
 		});
 
@@ -416,6 +423,7 @@ public class ActionGameLevel extends ActionGamePanel {
 //			e.printStackTrace();
 			repaint();
 		}
+		g.drawImage(GamePanel.buttonIcon, 28, 20, 78, 70, 0, 0, 50, 50, null);
 	}
 
 	/**

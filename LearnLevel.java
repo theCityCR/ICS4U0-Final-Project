@@ -19,7 +19,7 @@ import java.util.Scanner;
  *         This class is the learn level.
  */
 
-@SuppressWarnings("serial")
+@SuppressWarnings("all")
 public class LearnLevel extends GamePanel implements MouseListener {
 	/**
 	 * the state returned by display
