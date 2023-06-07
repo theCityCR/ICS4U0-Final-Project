@@ -27,18 +27,55 @@ public class MazeLevel extends GamePanel implements KeyListener{
 	 * is on the bottom
 	 */
 	private String exitOfDeadEnd;
-
+	
+	/**
+	 * Image representing a dead end on the right
+	 */
 	private Image rightRoom;
+	/**
+	 * Image represneting a dead end on the left
+	 */
 	private Image leftRoom;
+	/**
+	 * Image representing a dead end on the top
+	 */
 	private Image topRoom;
+	/**
+	 * Image representing a dead end on the bottom
+	 */
 	private Image bottomRoom;
+	/**
+	 * Image representing a crossroad with 4 paths
+	 */
 	private Image crossroad;
+	/**
+	 * Player instance variable. 
+	 */
 	private Player p;
+	/**
+	 * Whether the user is going up
+	 */
 	private boolean up;
+	/**
+	 * Whether the user is going down
+	 */
 	private boolean down;
+	/**
+	 * Whether the user is going right
+	 */
 	private boolean right;
+	/**
+	 * Whether the user is going left
+	 */
 	private boolean left;
+	/**
+	 * Whether focus has been requested yet
+	 */
 	private boolean requested;
+	/**
+	 * Counter for animating the walk
+	 */
+	private int walkCounter;
 
 	public MazeLevel() {
 		this.setFocusable(true);
@@ -73,6 +110,8 @@ public class MazeLevel extends GamePanel implements KeyListener{
 		super.paintComponent(g);
 		paintRoom(g);
 		
+		if (up || left || down || right)
+			walkCounter++;
 		if (up)
 			p.sety(p.gety()-2);
 		if (down)
@@ -81,6 +120,7 @@ public class MazeLevel extends GamePanel implements KeyListener{
 			p.setx(p.getx()+2);
 		if (left)
 			p.setx(p.getx()-2);
+		
 	}
 
 	public void paintRoom(Graphics g) {
@@ -111,13 +151,13 @@ public class MazeLevel extends GamePanel implements KeyListener{
 	class Player {
 		private int x;
 		private int y;
-		private Image avatar;
+		private Image[] avatars;
 
 		public Player() {
 			x = 0;
 			y = 0;
 			try {
-				avatar = ImageIO.read(new File("Avatar.jpg"));
+				avatars = new Image[] {ImageIO.read(new File("Avatar1.png")),ImageIO.read(new File("Avatar2.png")),ImageIO.read(new File("Avatar3.png"))};
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -184,7 +224,7 @@ public class MazeLevel extends GamePanel implements KeyListener{
 		}
 
 		Image getAvatar() {
-			return avatar;
+			return avatars[(walkCounter/15) % 3];
 		}
 	}
 
@@ -198,6 +238,7 @@ public class MazeLevel extends GamePanel implements KeyListener{
 
 	@Override
 	public void keyPressed(KeyEvent e) {
+		
 		switch (e.getKeyCode()) {
 		case KeyEvent.VK_UP:
 		case KeyEvent.VK_W:

@@ -1,12 +1,12 @@
-Video game toxicity: negative, abusive, and disrespectful behavior towards other players. 
-Examples of toxic behavior are griefing and verbal harassment. 
-Griefing is intentionally ruining the gaming experience of other players. Examples include bullying lower level players or purposely aiding the enemy team instead of yours. 
-Toxic language includes using profanity, calling players derogatory names, or insulting players' skills. 
-Reporting the player, muting or blocking them, or exiting the game are effective strategies against toxic players. 
-Responding with toxic behavior of your own is not an effective way to deal with toxic behavior as it only perpetuates the cycle of toxicity. 
-Toxic behavior can decrease enjoyment and negatively impact teamwork. 
-Promoting positive behavior is a great way to create an enjoyable gaming experience for all players. 
-Encouraging players to work together towards a common goal, congratulating opponents on a well-played game, and offering help to other players can promote positive behavior. 
-Taunting opponents, insulting players who make mistakes, and cheating are not effective in promoting positive behavior, but rather promote toxic behavior. 
+Video game toxicity is the act of negative,\r\nabusive, and disrespectful behavior towards other players. 
+Video game toxicity has been rising in the past few years, and does not seem to be going down. 81% of people who played online multiplayer games experienced some form of harassment, compared to 74% of people in the 2019 survey. 68% of people experienced more severe abuse, including physical threats, stalking, and sustained harassment, up from 65% in 2019.
+Examples of toxic behavior are griefing and verbal harassment. Griefing is intentionally ruining the gaming experience of other players. Examples include bullying lower level players or purposely aiding the enemy team instead of yours. 
+Toxic language includes using profanity, calling players derogatory names, or insulting players' skills. Many kinds of insults will come up in video games, and none of these will ever be acceptable. 
+Reporting the player, muting or blocking them, or exiting the game are effective strategies against toxic players. Many games will have the option to report players in game, but if not, usually sending an email to the company or development team will also work.
+Responding with toxic behavior of your own is not an effective way to deal with toxic behavior as it only perpetuates the cycle of toxicity. Rather than fighting fire with fire, try other methods.
+Toxic behavior can decrease enjoyment and negatively impact teamwork. This is because negativity can negatively impact the emotions of others and irritate them, causing them to go against the idea of proper teamwork.
+Promoting positive behavior is a great way to create an enjoyable gaming experience for all players. It creates a positive feedback loop where everyone wants to be positive.
+Encouraging players to work together towards a common goal, congratulating opponents on a well-played game, and offering help to other players can promote positive behavior. By actively promoting positive behaviour, it will also actively improve your own mental health. 
+Taunting opponents, insulting players who make mistakes, and cheating are not effective in promoting positive behavior, but rather promote toxic behavior. Creating unfair and unsafe environments in video games is a way to foster negativity and unfair play.
 Addressing the root causes of toxic behavior by providing education and training on proper conduct and behavior, and creating guidelines on acceptable behavior can reduce toxic behavior. 
-Collaborative efforts from players, game developers, and administrators will create a gaming environment that is enjoyable and welcoming for all players. 
+Collaborative efforts from players, game developers, and administrators will create a gaming environment that is enjoyable and welcoming for all players.

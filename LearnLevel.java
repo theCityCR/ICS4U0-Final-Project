@@ -74,11 +74,11 @@ public class LearnLevel extends GamePanel implements MouseListener {
 	 * reading in images and lines from a txt
 	 */
 	private void readInfoFromFile() {
-		File myObj = new File("culminating//research.txt");
+		File myObj = new File("src//culminating//research.txt");
 
 		try {
-			checkCard = ImageIO.read(new File("culminating//CheckCard.jpg"));
-			questionCard = ImageIO.read(new File("culminating//questionCard.jpg"));
+			checkCard = ImageIO.read(new File("CheckCard.jpg"));
+			questionCard = ImageIO.read(new File("questionCard.jpg"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -152,7 +152,8 @@ public class LearnLevel extends GamePanel implements MouseListener {
 				currentState = "main";
 			}
 		});
-		g.drawString(cardArr[row][column].getInfo(), 100, 50);
+		g.setFont(new Font(Font.MONOSPACED,Font.PLAIN,25));
+		g.drawString(cardArr[row][column].getInfo(), 50, 50);
 		add(card);
 	}
 
@@ -163,7 +164,7 @@ public class LearnLevel extends GamePanel implements MouseListener {
 	private void paintInstructions(Graphics g) {
 		g.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 20));
 		String info = "Recruit, welcome to Fair Play Frontier! Before we send you\nto the frontier, you need training! First, you’ll need to\nlearn about Fair Play! Fair Play is a way to of playing games\nthat combats toxicity in video games. To start learning,\nclick the flash cards on the screen. After clicking the cards,\nthe information on the card will be enlarged, and you can see\nthe information! Clicking the screen again will close it.\nThe card will turn green.\nAdvance by turning all your cards green.";
-		drawString(g,info, 90, 50);
+		drawString(g,info, 30, 50);
 
 		g.drawString("Continue", 350, 400);
 		g.drawRect(200, 375, 400, 50);
