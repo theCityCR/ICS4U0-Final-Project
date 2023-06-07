@@ -16,8 +16,7 @@ import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.util.Arrays;
 
-@SuppressWarnings("all")
-public class MazeLevel extends GamePanel {
+public class MazeLevel extends GamePanel implements KeyListener{
 	/**
 	 * used for navigating the rooms array
 	 */
@@ -39,10 +38,11 @@ public class MazeLevel extends GamePanel {
 	private boolean down;
 	private boolean right;
 	private boolean left;
+	private boolean requested;
 
 	public MazeLevel() {
 		this.setFocusable(true);
-		grabFocus();
+		requested = false;
 		try {
 			rightRoom = ImageIO.read(new File("Right.jpg"));
 			leftRoom = ImageIO.read(new File("Left.jpg"));
@@ -54,44 +54,33 @@ public class MazeLevel extends GamePanel {
 		}
 		p = new Player();
 		coords = new int[] { 2, 4 };
-		Action lAction = new LeftAction("Left",null,null, null);
-		getInputMap().put(KeyStroke.getKeyStroke("W"), "doSomething");
-		getActionMap().put("doSomething", lAction);
-
+		this.addKeyListener(this);
 	}
 
-	class LeftAction extends AbstractAction {
-		private String direction;
-
-		public LeftAction(String text, ImageIcon icon, String desc, Integer mnemonic) {
-			super(text, icon);
-			putValue(SHORT_DESCRIPTION, desc);
-			putValue(MNEMONIC_KEY, mnemonic);
-		}
-
-		public void actionPerformed(ActionEvent e) {
-			if (direction.equals("Left"))
-				p.setx(p.getx() - 2);
-			else if (direction.equals("Right"))
-				p.setx(p.getx() + 2);
-			else if (direction.equals("Up"))
-				p.sety(p.gety() - 2);
-			else if (direction.equals("Down"))
-				p.sety(p.gety() + 2);
-
-		}
-	}
+	
 
 	@Override
 	public State display() {
 		// TODO Auto-generated method stub
+		
 		repaint();
 		return State.MAZE;
 	}
 
 	public void paintComponent(Graphics g) {
+		if (!requested)
+			requestFocusInWindow();
 		super.paintComponent(g);
 		paintRoom(g);
+		
+		if (up)
+			p.sety(p.gety()-2);
+		if (down)
+			p.sety(p.gety()+2);
+		if (right)
+			p.setx(p.getx()+2);
+		if (left)
+			p.setx(p.getx()-2);
 	}
 
 	public void paintRoom(Graphics g) {
@@ -196,6 +185,58 @@ public class MazeLevel extends GamePanel {
 
 		Image getAvatar() {
 			return avatar;
+		}
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		switch (e.getKeyCode()) {
+		case KeyEvent.VK_UP:
+		case KeyEvent.VK_W:
+			up = true;
+			break;
+		case KeyEvent.VK_DOWN:
+		case KeyEvent.VK_S:
+			down = true;
+			break;
+		case KeyEvent.VK_RIGHT:
+		case KeyEvent.VK_D:
+			right = true;
+			break;
+		case KeyEvent.VK_LEFT:
+		case KeyEvent.VK_A:
+			left = true;
+			break;
+		}
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		switch (e.getKeyCode()) {
+		case KeyEvent.VK_UP:
+		case KeyEvent.VK_W:
+			up = false;
+			break;
+		case KeyEvent.VK_DOWN:
+		case KeyEvent.VK_S:
+			down = false;
+			break;
+		case KeyEvent.VK_RIGHT:
+		case KeyEvent.VK_D:
+			right = false;
+			break;
+		case KeyEvent.VK_LEFT:
+		case KeyEvent.VK_A:
+			left = false;
+			break;
 		}
 	}
 
