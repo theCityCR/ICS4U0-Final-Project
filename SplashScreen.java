@@ -1,5 +1,7 @@
 package culminating;
 
+import java.awt.image.BufferedImage;
+
 /**
  * @author Raymond Ouyang
  * 
@@ -13,8 +15,12 @@ package culminating;
 @SuppressWarnings("serial")
 public class SplashScreen extends GamePanel {
 
+	static BufferedImage logo;
+	
+	
+	
 	public SplashScreen() {
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	@Override
