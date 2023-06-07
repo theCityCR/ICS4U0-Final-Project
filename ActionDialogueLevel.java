@@ -118,7 +118,7 @@ public class ActionDialogueLevel extends ActionGamePanel {
 	/**
 	 * Background to show
 	 */
-	static BufferedImage background;
+	private static BufferedImage background;
 
 	/**
 	 * Creates a new ActionDialogueLevel object
@@ -174,6 +174,10 @@ public class ActionDialogueLevel extends ActionGamePanel {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		g.drawImage(background, 0, 0, 800, 500, 0, 0, 800, 500, null);
+	}
+
+	public static void setBackground(BufferedImage background) {
+		ActionDialogueLevel.background = background;
 	}
 
 	/**

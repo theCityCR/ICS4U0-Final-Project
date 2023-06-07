@@ -36,7 +36,14 @@ public class ActionContinueLevel extends ActionGamePanel {
 	/**
 	 * Background to show
 	 */
-	static BufferedImage background;
+	private static BufferedImage background;
+
+	/**
+	 * @param background the background to set
+	 */
+	static void setBackground(BufferedImage background) {
+		ActionContinueLevel.background = background;
+	}
 
 	/**
 	 * Creates a new ActionContinueLevel object

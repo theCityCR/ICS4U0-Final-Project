@@ -44,7 +44,7 @@ public class GameExit extends GamePanel {
 	/**
 	 * Background to show
 	 */
-	static BufferedImage background;
+	private static BufferedImage background;
 
 	/**
 	 * Creates a new GameExit object
@@ -87,6 +87,10 @@ public class GameExit extends GamePanel {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		g.drawImage(background, 0, 0, 800, 500, 0, 0, 800, 500, null);
+	}
+
+	public static void setBackground(BufferedImage background) {
+		GameExit.background = background;
 	}
 
 }

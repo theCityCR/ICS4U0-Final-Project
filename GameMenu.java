@@ -1,8 +1,14 @@
 package culminating;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+
+import javax.swing.ImageIcon;
 
 /**
  * @author Alex Li
@@ -77,7 +83,7 @@ public class GameMenu extends GamePanel implements MouseListener{
 	* Helper method to paint the splash screen.
 	*/
 	private void paintSplash(Graphics g) {
-		ImageIcon logo = new ImageIcon("culminating//Culminating Company Logo.jpg");
+		ImageIcon logo = new ImageIcon("src//culminating//Culminating Company Logo.jpg"); //TODO change
 //		int w = logo.getIconWidth();
 //		int h = logo.getIconHeight();
 		logo.paintIcon(this, g, -500 + framesDone * 3, 50);
@@ -98,30 +104,38 @@ public class GameMenu extends GamePanel implements MouseListener{
 	* Helper method to paint the main menu
 	*/
 	private void paintMain(Graphics g) {
-		ImageIcon bg = new ImageIcon("culminating//MenuBG.jpg");
-		bg.paintIcon(this, g, 0,0);
+		
+		//Background
+		SplashScreen.getBg().paintIcon(this, g, 0,0);
+		
+		//Logo
+		g.drawImage(SplashScreen.getLogo(), 41, 50, 170, 150, 0, 0, 861, 668, null);
+		
+		//Title
 		g.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 40));
+		g.setColor(Color.red);
+		g.drawString("FAIR PLAY FRONTIER", 215, 110);
+
+		
+		//Menu Button
 		g.setColor(Color.BLUE);
 		g.fillRoundRect(190, 170, 400, 50,20,20);
 		g.fillRoundRect(190, 230, 400, 50,20,20);
 		g.fillRoundRect(190, 290, 400, 50,20,20);
 		g.fillRoundRect(190, 350, 400, 50,20,20);
-		g.setColor(Color.red);
-		g.drawString("FAIR PLAY FRONTIER", 215, 110);
-		g.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 20));
-
+		
+		//Menu text
 		g.setColor(Color.WHITE);
+		g.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 20));
 		g.drawString("LEARN", 360, 200);
 		g.drawString("MAZE", 360, 260);
 		g.drawString("ACTION", 360, 320);
 		g.drawString("EXIT", 360, 380);
-		
 
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		System.out.println("this");
 		// TODO Auto-generated method stub
 		if (e.getX() >= 190 && e.getX() <= 590) {
 			if (e.getY() >= 170 && e.getY() <= 220) {

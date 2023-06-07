@@ -25,7 +25,7 @@ public abstract class GamePanel extends JPanel {
 	/**
 	 * Icon of the button
 	 */
-	static Image buttonIcon;
+	private static Image buttonIcon;
 
 	/**
 	 * What to return (default if null)
@@ -48,7 +48,7 @@ public abstract class GamePanel extends JPanel {
 		requestFocusInWindow();
 
 		setToRet(null);
-		if (!(this instanceof GameMenu)) {
+		if (showMenu()) {
 			this.addMouseListener(new MouseAdapter() {
 
 				@Override
@@ -87,8 +87,25 @@ public abstract class GamePanel extends JPanel {
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
-		if (!(this instanceof GameMenu)) {
-			g.drawImage(buttonIcon, 20, 20, 70, 70, 0, 0, 50, 50, null);
+		if (showMenu()) {
+			g.drawImage(getButtonIcon(), 20, 20, 70, 70, 0, 0, 50, 50, null);
 		}
+	}
+	
+	/**
+	 * Whether to show menu
+	 * 
+	 * @return	true if show menu, false otherwise
+	 */
+	private boolean showMenu() {
+		return !(this instanceof SplashScreen || this instanceof GameMenu);
+	}
+
+	public static Image getButtonIcon() {
+		return buttonIcon;
+	}
+
+	public static void setButtonIcon(Image buttonIcon) {
+		GamePanel.buttonIcon = buttonIcon;
 	}
 }

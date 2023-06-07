@@ -2,6 +2,7 @@ package culminating;
 
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JButton;
@@ -28,7 +29,11 @@ public class ActionEndLevel extends ActionGamePanel {
 	/**
 	 * Background to show
 	 */
-	static BufferedImage background;
+	private static BufferedImage background;
+
+	public static void setBackground(BufferedImage background) {
+		ActionEndLevel.background = background;
+	}
 
 	/**
 	 * Creates a new ActionEndLevel
@@ -37,7 +42,7 @@ public class ActionEndLevel extends ActionGamePanel {
 		this.setLayout(new FlowLayout(FlowLayout.CENTER, 1000, 50));
 		toRet = ActionState.END;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -52,8 +57,8 @@ public class ActionEndLevel extends ActionGamePanel {
 		} else {
 			label = "Unfortunately, you have been defeated by the AI.";
 		}
-		JLabel l = new JLabel(
-				String.format("<html><div style=\"width:%dpx; text-align:center;\">%s</div></html>", 400, label));
+		JLabel l = new JLabel(String
+				.format("<html><div style=\"width:%dpx; text-align:center; color:white\">%s</div></html>", 400, label));
 
 		String ano = "";
 		double percent = ActionDialogueLevel.getRightRatio();
@@ -62,8 +67,8 @@ public class ActionEndLevel extends ActionGamePanel {
 		} else {
 			ano = String.format("You correctly responded to %d%% of the insults.", (int) Math.round(100 * percent));
 		}
-		JLabel j = new JLabel(
-				String.format("<html><div style=\"width:%dpx; text-align:center;\">%s</div></html>", 400, ano));
+		JLabel j = new JLabel(String
+				.format("<html><div style=\"width:%dpx; text-align:center; color:white\">%s</div></html>", 400, ano));
 
 		JButton button = new JButton("Continue →");
 		button.addActionListener(e -> {
@@ -87,6 +92,15 @@ public class ActionEndLevel extends ActionGamePanel {
 	@Override
 	public ActionState display() {
 		return toRet;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		g.drawImage(background, 0, 0, 800, 500, 0, 0, 800, 500, null);
 	}
 
 }

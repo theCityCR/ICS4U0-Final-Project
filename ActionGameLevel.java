@@ -128,11 +128,6 @@ public class ActionGameLevel extends ActionGamePanel {
 					"You're right, I'll never amount to anything." } };
 
 	/**
-	 * Ratio of correct reactions
-	 */
-	public static double rightRatio;
-
-	/**
 	 * Moving objects
 	 */
 	private ArrayList<Moveable> movers;
@@ -229,7 +224,7 @@ public class ActionGameLevel extends ActionGamePanel {
 	/**
 	 * Background to show
 	 */
-	static BufferedImage background;
+	private static BufferedImage background;
 
 	/**
 	 * Creates a new ActionGameLevel instance
@@ -391,7 +386,6 @@ public class ActionGameLevel extends ActionGamePanel {
 		framesWait--;
 		if (framesWait < 0) {
 			framesWait = (int) (Math.random() * (FRAMES_MAX - FRAMES_MIN)) + FRAMES_MIN;
-			;
 			return ActionState.DIALOGUE;
 		}
 		if (ended) {
@@ -426,7 +420,7 @@ public class ActionGameLevel extends ActionGamePanel {
 //			e.printStackTrace();
 			repaint();
 		}
-		g.drawImage(GamePanel.buttonIcon, 28, 20, 78, 70, 0, 0, 50, 50, null);
+		g.drawImage(GamePanel.getButtonIcon(), 28, 20, 78, 70, 0, 0, 50, 50, null);
 	}
 
 	/**
@@ -798,7 +792,7 @@ public class ActionGameLevel extends ActionGamePanel {
 	 * 
 	 *         This class represents the player's tank.
 	 */
-	class PlayerTank extends Tank {
+	final class PlayerTank extends Tank {
 
 		/**
 		 * Creates new player tank
@@ -877,6 +871,10 @@ public class ActionGameLevel extends ActionGamePanel {
 		return player.reward();
 	}
 
+	public static void setBackground(BufferedImage background) {
+		ActionGameLevel.background = background;
+	}
+
 	/**
 	 * @author Raymond Ouyang
 	 * 
@@ -886,7 +884,7 @@ public class ActionGameLevel extends ActionGamePanel {
 	 * 
 	 *         This class represents an AI tank.
 	 */
-	class AITank extends Tank {
+	final class AITank extends Tank {
 
 		/**
 		 * Creates a new AITank object
@@ -931,7 +929,7 @@ public class ActionGameLevel extends ActionGamePanel {
 	 * 
 	 *         This class represents a bullet.
 	 */
-	class Bullet extends Moveable {
+	final class Bullet extends Moveable {
 
 		/**
 		 * The direction the bullet is going
