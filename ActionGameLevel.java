@@ -401,6 +401,9 @@ public class ActionGameLevel extends ActionGamePanel {
 		}
 	}
 
+	/**
+	 * Ends the game
+	 */
 	public void endGame() {
 		ended = true;
 	}

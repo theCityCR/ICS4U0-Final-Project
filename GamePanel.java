@@ -22,8 +22,14 @@ import javax.swing.JPanel;
 @SuppressWarnings("serial")
 public abstract class GamePanel extends JPanel {
 
+	/**
+	 * Icon of the button
+	 */
 	static Image buttonIcon;
 
+	/**
+	 * What to return (default if null)
+	 */
 	private State toRet;
 
 	/**
@@ -58,10 +64,15 @@ public abstract class GamePanel extends JPanel {
 	/**
 	 * Displays the game panel
 	 * 
-	 * @return the state to be in
+	 * @return 	the state to be in
 	 */
 	public abstract State display();
 
+	/**
+	 * Gives new state
+	 * 
+	 * @return	the state to be in
+	 */
 	public State newState() {
 		if (toRet == null) {
 			return display();
