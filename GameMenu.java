@@ -4,18 +4,35 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-@SuppressWarnings("serial")
-public class GameMenu extends GamePanel implements MouseListener {
-	private String state;
-	private State returnState;
-	private String previousState;
-	private int framesDone;
-	Button learn = new Button("Learn");
-	Button maze = new Button("Maze");
-	Button action = new Button("Action");
-	Button exit = new Button("Exit");
-	Button splash = new Button("Splash");
+/**
+ * @author Alex Li
+ * Teacher: Mrs. Krasteva
+ * Date: 2023-05-15
+ * 
+ */
 
+@SuppressWarnings("serial")
+public class GameMenu extends GamePanel implements MouseListener{
+	/**
+	* current screen of the GameMenu. Either splash or menu
+	*/
+	private String state;
+	/**
+	* returns the state that the game should be on.
+	*/
+	private State returnState;
+	/**
+	* previous screen of the GameMenu. Helps to know when to repaint and clear screen
+	*/
+	private String previousState;
+	/**
+	* counting frames for the splash screen animation
+	*/
+	private int framesDone;
+	
+	/**
+	* Class constructor of the GameMenu class
+	*/
 	public GameMenu() {
 		state = "main";
 		previousState = state;
@@ -24,7 +41,11 @@ public class GameMenu extends GamePanel implements MouseListener {
 		setLayout(new FlowLayout());
 		this.addMouseListener(this);
 	}
-
+	
+	/**
+	* Returns the return state, or what the screen the game should currently be on. Also used to animate the splash screen
+	* returns: returnstate, the state that the screen should be on
+	*/
 	@Override
 	public State display() {
 		if (state == "splash") {
@@ -33,7 +54,10 @@ public class GameMenu extends GamePanel implements MouseListener {
 		}
 		return returnState;
 	}
-
+	
+	/**
+	* method to paint on the JPanel of this class. Changes depending on the current state of the class.
+	*/
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
@@ -47,10 +71,13 @@ public class GameMenu extends GamePanel implements MouseListener {
 		if (previousState.equals(state) && state == "splash")
 			removeAll();
 
+		
 	}
-
-	public void paintSplash(Graphics g) {
-		ImageIcon logo = new ImageIcon("Culminating Company Logo.jpg");
+	/**
+	* Helper method to paint the splash screen.
+	*/
+	private void paintSplash(Graphics g) {
+		ImageIcon logo = new ImageIcon("culminating//Culminating Company Logo.jpg");
 //		int w = logo.getIconWidth();
 //		int h = logo.getIconHeight();
 		logo.paintIcon(this, g, -500 + framesDone * 3, 50);
@@ -58,26 +85,37 @@ public class GameMenu extends GamePanel implements MouseListener {
 		g.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 30));
 		g.drawString("O&L Design Firms presents...", -350 + framesDone * 3, 100);
 
-		if (framesDone == 250) {
+		if (framesDone == 450) {
 			framesDone = 0;
 			state = "main";
 			repaint();
 			removeAll();
 		}
+		
+		
 	}
+	/**
+	* Helper method to paint the main menu
+	*/
+	private void paintMain(Graphics g) {
+		ImageIcon bg = new ImageIcon("culminating//MenuBG.jpg");
+		bg.paintIcon(this, g, 0,0);
+		g.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 40));
+		g.setColor(Color.BLUE);
+		g.fillRoundRect(190, 170, 400, 50,20,20);
+		g.fillRoundRect(190, 230, 400, 50,20,20);
+		g.fillRoundRect(190, 290, 400, 50,20,20);
+		g.fillRoundRect(190, 350, 400, 50,20,20);
+		g.setColor(Color.red);
+		g.drawString("FAIR PLAY FRONTIER", 215, 110);
+		g.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 20));
 
-	public void paintMain(Graphics g) {
-
-		g.drawString("FREE PLAY FRONTIER", 190, 100);
+		g.setColor(Color.WHITE);
 		g.drawString("LEARN", 360, 200);
 		g.drawString("MAZE", 360, 260);
 		g.drawString("ACTION", 360, 320);
 		g.drawString("EXIT", 360, 380);
-		g.drawRect(190, 170, 400, 50);
-		g.drawRect(190, 230, 400, 50);
-		g.drawRect(190, 290, 400, 50);
-		g.drawRect(190, 350, 400, 50);
-
+		
 
 	}
 
