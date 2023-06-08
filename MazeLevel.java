@@ -4,19 +4,13 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.ImageIcon;
-import javax.swing.KeyStroke;
-
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.image.BufferedImage;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.Arrays;
 
-public class MazeLevel extends GamePanel implements KeyListener {
+public class MazeLevel extends GamePanel implements KeyListener,MouseListener {
 	/**
 	 * used for navigating the rooms array
 	 */
@@ -48,6 +42,10 @@ public class MazeLevel extends GamePanel implements KeyListener {
 	 * Image representing a crossroad with 4 paths
 	 */
 	private Image crossroad;
+	/**
+	 * Image representing the exit of the maze level
+	 */
+	private Image exit;
 	/**
 	 * Image representing a sign with questions
 	 */
@@ -88,17 +86,28 @@ public class MazeLevel extends GamePanel implements KeyListener {
 	 * Array of possible answers
 	 */
 	private String[][] answers;
+	/**
+	 * Which part of the maze level the screen is on
+	 */
+	private String currentState;
+	/**
+	 * What screen display returns
+	 */
+	private State returnState;
 
 	public MazeLevel() {
 		this.setFocusable(true);
 		requested = false;
+		currentState = "room";
 		try {
 			rightRoom = ImageIO.read(new File("Right.jpg"));
 			leftRoom = ImageIO.read(new File("Left.jpg"));
 			topRoom = ImageIO.read(new File("Top.jpg"));
 			bottomRoom = ImageIO.read(new File("Bottom.jpg"));
 			crossroad = ImageIO.read(new File("Crossroad.jpg"));
+			exit = ImageIO.read(new File("exit.png"));
 			sign = ImageIO.read(new File("sign.png"));
+			
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -139,8 +148,8 @@ public class MazeLevel extends GamePanel implements KeyListener {
 						"(Up) I enjoyed a lot of time with your mother and your sister yesterday",
 						"(Right) I hope that you keep yourself safe" },
 				new String[] {
-						"(Left) I've stubbed my toes many times. Once more won't affect me.",
-						"(Up)Go break a leg. Literally. ", "(Down) Stay silent" }
+						"(Left)Go break a leg. Literally.",
+						"(Up)I've stubbed my toes many times. Once more won't affect me. ", "(Down) Stay silent" }
 		};
 	}
 
@@ -148,21 +157,21 @@ public class MazeLevel extends GamePanel implements KeyListener {
 		if (!requested)
 			requestFocusInWindow();
 		super.paintComponent(g);
-		paintRoom(g);
+		if (currentState == "instructions")
+			paintInstructions(g);
+		else if (currentState == "room")
+			paintRoom(g);
+		else{
+			paintFinal(g);
+		}
 
-		p.checkNextLevel();
-		p.checkCollision();
-		int shift = 4;
-		if (up || left || down || right)
-			walkCounter++;
-		if (up)
-			p.sety(p.gety() - shift);
-		if (down)
-			p.sety(p.gety() + shift);
-		if (right)
-			p.setx(p.getx() + shift);
-		if (left)
-			p.setx(p.getx() - shift);
+	}
+
+	public void paintInstructions(Graphics g){
+
+	}
+
+	public void paintFinal(Graphics g){
 
 	}
 
@@ -175,7 +184,7 @@ public class MazeLevel extends GamePanel implements KeyListener {
 			g.drawString("Room" + (7 - (coords[0] + coords[1])), 380, 225);
 
 		} else if (Arrays.equals(coords, new int[] { 0, 1 })) {
-			g.drawImage(bottomRoom, 0, 0, null);
+			g.drawImage(exit, 0, 0, null);
 		}
 
 		else {
@@ -193,6 +202,7 @@ public class MazeLevel extends GamePanel implements KeyListener {
 					g.drawImage(bottomRoom, 0, 0, null);
 					break;
 			}
+
 		}
 
 		g.drawImage(p.getAvatar(), p.getx(), p.gety(), null);
@@ -203,27 +213,42 @@ public class MazeLevel extends GamePanel implements KeyListener {
 				g.setColor(new Color(155, 103, 60, 255));
 				g.fillRect(100, 100, 600, 300);
 				g.setColor(Color.white);
-				g.setFont(new Font(Font.MONOSPACED,Font.PLAIN,16));
-				drawString(g,questions[6-coords[0]-coords[1]], 130, 140);
-				drawString(g,answers[6-coords[0]-coords[1]][0], 130, 240);
-				drawString(g,answers[6-coords[0]-coords[1]][1], 130, 270);
-				drawString(g,answers[6-coords[0]-coords[1]][2], 130, 300);
+				g.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 16));
+				drawString(g, questions[6 - coords[0] - coords[1]], 130, 140);
+				drawString(g, answers[6 - coords[0] - coords[1]][0], 130, 240);
+				drawString(g, answers[6 - coords[0] - coords[1]][1], 130, 270);
+				drawString(g, answers[6 - coords[0] - coords[1]][2], 130, 300);
 			}
 		}
+		p.checkNextLevel();
+		p.checkCollision();
+		int shift = 8;
+		if (up || left || down || right)
+			walkCounter++;
+		if (up)
+			p.sety(p.gety() - shift);
+		if (down)
+			p.sety(p.gety() + shift);
+		if (right)
+			p.setx(p.getx() + shift);
+		if (left)
+			p.setx(p.getx() - shift);
 	}
 
 	/**
 	 * Taken from Stack overflow to do newlines in drawString
-	 * Source: https://stackoverflow.com/questions/4413132/problems-with-newline-in-graphics2d-drawstring 
+	 * Source:
+	 * https://stackoverflow.com/questions/4413132/problems-with-newline-in-graphics2d-drawstring
+	 * 
 	 * @param g
 	 * @param text
 	 * @param x
 	 * @param y
 	 */
 	private void drawString(Graphics g, String text, int x, int y) {
-        for (String line : text.split("\n"))
-            g.drawString(line, x, y += g.getFontMetrics().getHeight());
-    }
+		for (String line : text.split("\n"))
+			g.drawString(line, x, y += g.getFontMetrics().getHeight());
+	}
 
 	class Player {
 		private int x;
@@ -323,22 +348,28 @@ public class MazeLevel extends GamePanel implements KeyListener {
 		void checkNextLevel() {
 			// close enough to an exit then tells the paintComponent to repaint to new
 			// screen
-			if (x >= 750 && y >= 150 && y <= 250) {
+			if (x >= 750 && y >= 100 && y <= 300) {
 				exitOfDeadEnd = "Right";
 				coords[1] += 1;
 				p.setx(50);
-			} else if (x <= 10 && y >= 150 && y <= 250) {
+			} else if (x <= 10 && y >= 100 && y <= 300) {
 				exitOfDeadEnd = "Left";
 				coords[1] -= 1;
 				p.setx(750);
-			} else if (y >= 490 && x >= 350 && x <= 450) {
+			} else if (y >= 490 && x >= 300 && x <= 450) {
 				exitOfDeadEnd = "Down";
 				coords[0] += 1;
 				p.sety(50);
-			} else if (y <= 10 && x >= 350 && x <= 450) {
+			} else if (y <= 10 && x >= 300 && x <= 450) {
 				exitOfDeadEnd = "Up";
 				coords[0] -= 1;
 				p.sety(450);
+			}
+			if (Arrays.equals(new int[] { 0, 1 }, coords)) {
+				System.out.println(p.getx()+" "+p.gety());
+				if (y <= 220 && x >= 358 && x <= 390) {
+					currentState = "final";
+				}
 			}
 		}
 
@@ -412,6 +443,36 @@ public class MazeLevel extends GamePanel implements KeyListener {
 				left = false;
 				break;
 		}
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'mouseClicked'");
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'mousePressed'");
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'mouseReleased'");
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'mouseEntered'");
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'mouseExited'");
 	}
 
 }
