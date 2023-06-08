@@ -94,7 +94,9 @@ public class MazeLevel extends GamePanel implements KeyListener,MouseListener {
 	 * What screen display returns
 	 */
 	private State returnState;
-
+	/**
+	* Class constructor
+	*/
 	public MazeLevel() {
 		this.setFocusable(true);
 		requested = false;
@@ -119,13 +121,18 @@ public class MazeLevel extends GamePanel implements KeyListener,MouseListener {
 	}
 
 	@Override
+	/**
+	* Used to repaint and return when to switch screens
+	*/
 	public State display() {
 		// TODO Auto-generated method stub
 
 		repaint();
 		return State.MAZE;
 	}
-
+	/**
+	* Initializes the questions and answers which appears on the signs
+	*/
 	private void initQuestions() {
 		questions = new String[] {
 				"If you were playing an online video game, and someone typed in \nchat that one of your teammates is a *****, \nwhat would be the appropriate response?",
@@ -152,7 +159,9 @@ public class MazeLevel extends GamePanel implements KeyListener,MouseListener {
 						"(Up)I've stubbed my toes many times. Once more won't affect me. ", "(Down) Stay silent" }
 		};
 	}
-
+	/**
+	* Paints the Maze level
+	*/
 	public void paintComponent(Graphics g) {
 		if (!requested)
 			requestFocusInWindow();
@@ -166,15 +175,21 @@ public class MazeLevel extends GamePanel implements KeyListener,MouseListener {
 		}
 
 	}
-
+	/**
+	* Paints the instruction screen
+	*/
 	public void paintInstructions(Graphics g){
 
 	}
-
+	/**
+	*Paints the final screen after finishing the maze
+	*/
 	public void paintFinal(Graphics g){
 
 	}
-
+	/**
+	* Paints the rooms of the maze
+	*/
 	public void paintRoom(Graphics g) {
 		if (Arrays.equals(coords, new int[] { 2, 4 }) || Arrays.equals(coords, new int[] { 2, 3 })
 				|| Arrays.equals(coords, new int[] { 1, 3 }) || Arrays.equals(coords, new int[] { 1, 2 })
@@ -249,12 +264,25 @@ public class MazeLevel extends GamePanel implements KeyListener,MouseListener {
 		for (String line : text.split("\n"))
 			g.drawString(line, x, y += g.getFontMetrics().getHeight());
 	}
-
+	/**
+	* Player class, which is used to represent the player
+	*/
 	class Player {
+		/**
+		* x coordinate of the player
+		*/
 		private int x;
+		/**
+		* y coordinate of the player
+		*/
 		private int y;
+		/**
+		* Array of avatar images to animate walking
+		*/
 		private Image[] avatars;
-
+		/**
+		* Class constructor 
+		*/
 		public Player() {
 			x = 400;
 			y = 250;
@@ -372,23 +400,33 @@ public class MazeLevel extends GamePanel implements KeyListener,MouseListener {
 				}
 			}
 		}
-
+		/**
+		* Set method for x value. Mainly for collision
+		*/
 		void setx(int value) {
 			x = value;
 		}
-
+		/**
+		* Set method for y value. Mainly for collision
+		*/
 		void sety(int value) {
 			y = value;
 		}
-
+		/**
+		* returns x value
+		*/
 		int getx() {
 			return x;
 		}
-
+		/**
+		* returns y value
+		*/
 		int gety() {
 			return y;
 		}
-
+		/**
+		* returns a different avatar based on a timer to animate walking.
+		*/
 		Image getAvatar() {
 			return avatars[(walkCounter / 10) % 3];
 		}
