@@ -31,6 +31,11 @@ public class ActionEndLevel extends ActionGamePanel {
 	 */
 	private static BufferedImage background;
 
+	/**
+	 * Sets the background
+	 * 
+	 * @param background	new background
+	 */
 	public static void setBackground(BufferedImage background) {
 		ActionEndLevel.background = background;
 	}

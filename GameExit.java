@@ -89,6 +89,11 @@ public class GameExit extends GamePanel {
 		g.drawImage(background, 0, 0, 800, 500, 0, 0, 800, 500, null);
 	}
 
+	/**
+	 * Sets the background
+	 * 
+	 * @param background	new background
+	 */
 	public static void setBackground(BufferedImage background) {
 		GameExit.background = background;
 	}

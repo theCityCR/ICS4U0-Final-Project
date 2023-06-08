@@ -101,10 +101,20 @@ public abstract class GamePanel extends JPanel {
 		return !(this instanceof SplashScreen || this instanceof GameMenu);
 	}
 
+	/**
+	 * Gets the button icon
+	 * 
+	 * @return	the icon
+	 */
 	public static Image getButtonIcon() {
 		return buttonIcon;
 	}
 
+	/**
+	 * Sets the icon
+	 * 
+	 * @param buttonIcon	new icon
+	 */
 	public static void setButtonIcon(Image buttonIcon) {
 		GamePanel.buttonIcon = buttonIcon;
 	}

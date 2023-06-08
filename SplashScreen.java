@@ -23,22 +23,37 @@ import javax.swing.ImageIcon;
 @SuppressWarnings("serial")
 public class SplashScreen extends GamePanel {
 
+	/**
+	 * the logo
+	 */
 	private static BufferedImage logo;
 
+	/**
+	 * the background
+	 */
 	private static ImageIcon bg;
 
+	/**
+	 * the count
+	 */
 	private int count;
 
+	/**
+	 * Constructs a new splash screen object
+	 */
 	public SplashScreen() {
-		bg = new ImageIcon("src//culminating//MenuBG.jpg"); // TODO change
+		bg = new ImageIcon("culminating/MenuBG.jpg");
 		try {
-			logo = ImageIO.read(new File("src//culminating//CulminatingLogo.jpg")); // TODO change
+			logo = ImageIO.read(new File("culminating/CulminatingLogo.jpg"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		count = 0;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public State display() {
 		repaint();
@@ -46,6 +61,10 @@ public class SplashScreen extends GamePanel {
 		return count > 1000 ? State.MENU : State.SPLASH;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public void paintComponent(Graphics g) {
 		bg.paintIcon(this, g, 0, 0);
 
@@ -78,14 +97,29 @@ public class SplashScreen extends GamePanel {
 		g.drawString("EXIT", 360, Math.max(380, 3330 - 3 * count));
 	}
 
+	/**
+	 * Sets the logo
+	 * 
+	 * @param logo	the logo
+	 */
 	public static void setLogo(BufferedImage logo) {
 		SplashScreen.logo = logo;
 	}
 
+	/**
+	 * Gets the background
+	 * 
+	 * @return	background
+	 */
 	public static ImageIcon getBg() {
 		return bg;
 	}
 
+	/**
+	 * Gets the logo
+	 * 
+	 * @return	logo
+	 */
 	public static BufferedImage getLogo() {
 		return logo;
 	}

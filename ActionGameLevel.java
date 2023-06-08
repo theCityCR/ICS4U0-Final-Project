@@ -886,6 +886,11 @@ public class ActionGameLevel extends ActionGamePanel {
 		return player.reward();
 	}
 
+	/**
+	 * Sets the background
+	 * 
+	 * @param background	new background
+	 */
 	public static void setBackground(BufferedImage background) {
 		ActionGameLevel.background = background;
 	}

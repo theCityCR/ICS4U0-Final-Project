@@ -52,10 +52,10 @@ public class ActionDialogueLevel extends ActionGamePanel {
 					"I'll keep playing and enjoying it, unlike you.", "Why would I? Your words don't matter to me.",
 					"You're right, I'm uninstalling right now." },
 			{ "You're so bad, it's embarrassing!", "Your insults don't define my worth.",
-					"Thanks for the motivation to improve.", "I'm proud of my superior progress so far.",
+					"Thanks for the motivation to beat you.", "I'm proud of my superior progress so far.",
 					"You're right, I'll never get better." },
 			{ "Get good, scrub!", "Constructive criticism would be more helpful.",
-					"I'm just here to have fun, not be the best.", "I'll improve at my own pace, not one set by you.",
+					"I'm just here to have die, not be the best.", "I'll improve at my own pace, not one set by you.",
 					"You're right, I'm hopeless." },
 			{ "You're a no-life try hard!", "Everyone has their own hobbies and interests.",
 					"Your futile words won't affect my enjoyment of the game.", "I play because I enjoy beating you.",
@@ -176,6 +176,11 @@ public class ActionDialogueLevel extends ActionGamePanel {
 		g.drawImage(background, 0, 0, 800, 500, 0, 0, 800, 500, null);
 	}
 
+	/**
+	 * Sets the background
+	 * 
+	 * @param background	new background
+	 */
 	public static void setBackground(BufferedImage background) {
 		ActionDialogueLevel.background = background;
 	}
