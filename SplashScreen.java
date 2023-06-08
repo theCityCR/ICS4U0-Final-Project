@@ -44,7 +44,7 @@ public class SplashScreen extends GamePanel {
 		repaint();
 		System.out.println(count);
 		count++;
-		return count > 90000 ? State.MENU : State.SPLASH;
+		return count > 1000 ? State.MENU : State.SPLASH;
 	}
 
 	public void paintComponent(Graphics g) {
@@ -53,30 +53,30 @@ public class SplashScreen extends GamePanel {
 		// O&L presents
 		g.setColor(Color.RED);
 		g.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 40));
-		g.drawString("O&L Design Firms presents...", -350 + count * 3, 110);
+		g.drawString("O&L Design Firms presents...", 900 - count * 3, 110);
 
 		// Title
 		g.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 40));
 		g.setColor(Color.red);
-		g.drawString("FAIR PLAY FRONTIER", Math.min(215, -1200 + count * 3), 110);
+		g.drawString("FAIR PLAY FRONTIER", Math.max(215, 1900 - count * 3), 110);
 		
 		//Logo
-		g.drawImage(SplashScreen.getLogo(), 41, Math.min(50, -1500 + count * 3), 170, Math.min(150, -1400 + count * 3), 0, 0, 861, 668, null);
+		g.drawImage(SplashScreen.getLogo(), 41, Math.min(50, -1900 + count * 3), 170, Math.min(150, -1800 + count * 3), 0, 0, 861, 668, null);
 
 		// Menu Button
 		g.setColor(Color.BLUE);
-		g.fillRoundRect(190, 170, 400, 50, 20, 20);
-		g.fillRoundRect(190, 230, 400, 50, 20, 20);
-		g.fillRoundRect(190, 290, 400, 50, 20, 20);
-		g.fillRoundRect(190, 350, 400, 50, 20, 20);
+		g.fillRoundRect(190, Math.max(170, 2500 - 3 * count), 400, 50, 20, 20);
+		g.fillRoundRect(190, Math.max(230, 2800 - 3 * count), 400, 50, 20, 20);
+		g.fillRoundRect(190, Math.max(290, 3100 - 3 * count), 400, 50, 20, 20);
+		g.fillRoundRect(190, Math.max(350, 3300 - 3 * count), 400, 50, 20, 20);
 
 		// Menu text
 		g.setColor(Color.WHITE);
 		g.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 20));
-		g.drawString("LEARN", 360, 200);
-		g.drawString("MAZE", 360, 260);
-		g.drawString("ACTION", 360, 320);
-		g.drawString("EXIT", 360, 380);
+		g.drawString("LEARN", 360, Math.max(200, 2530 - 3 * count));
+		g.drawString("MAZE", 360, Math.max(260, 2830 - 3 * count));
+		g.drawString("ACTION", 360, Math.max(320, 3130 - 3 * count));
+		g.drawString("EXIT", 360, Math.max(380, 3330 - 3 * count));
 	}
 
 	public static void setLogo(BufferedImage logo) {
