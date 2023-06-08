@@ -42,9 +42,9 @@ public class SplashScreen extends GamePanel {
 	 * Constructs a new splash screen object
 	 */
 	public SplashScreen() {
-		bg = new ImageIcon("culminating/MenuBG.jpg");
+		bg = new ImageIcon("MenuBG.jpg");
 		try {
-			logo = ImageIO.read(new File("culminating/CulminatingLogo.jpg"));
+			logo = ImageIO.read(new File("CulminatingLogo.jpg"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

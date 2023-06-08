@@ -146,7 +146,7 @@ public class GameMain extends JFrame {
 	 */
 	private void loadAll() {
 		try {
-			BufferedReader br = new BufferedReader(new FileReader("culminating//images.txt"));
+			BufferedReader br = new BufferedReader(new FileReader("images.txt"));
 			ActionEndLevel.setBackground(getImage(br.readLine()));
 			GamePanel.setButtonIcon(getImage(br.readLine()));
 			ActionContinueLevel.setBackground(getImage(br.readLine()));
