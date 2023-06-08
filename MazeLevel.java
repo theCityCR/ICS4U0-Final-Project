@@ -51,6 +51,10 @@ public class MazeLevel extends GamePanel implements KeyListener,MouseListener {
 	 */
 	private Image sign;
 	/**
+	 * Image representing the narrator
+	 */
+	private Image narrator;
+	/**
 	 * Player instance variable.
 	 */
 	private Player p;
@@ -100,7 +104,8 @@ public class MazeLevel extends GamePanel implements KeyListener,MouseListener {
 	public MazeLevel() {
 		this.setFocusable(true);
 		requested = false;
-		currentState = "room";
+		currentState = "instructions";
+		returnState = State.MAZE;
 		try {
 			rightRoom = ImageIO.read(new File("Right.jpg"));
 			leftRoom = ImageIO.read(new File("Left.jpg"));
@@ -108,6 +113,8 @@ public class MazeLevel extends GamePanel implements KeyListener,MouseListener {
 			bottomRoom = ImageIO.read(new File("Bottom.jpg"));
 			crossroad = ImageIO.read(new File("Crossroad.jpg"));
 			exit = ImageIO.read(new File("exit.png"));
+			narrator = ImageIO.read(new File("Narrator.png"));
+
 			sign = ImageIO.read(new File("sign.png"));
 			
 
@@ -118,6 +125,7 @@ public class MazeLevel extends GamePanel implements KeyListener,MouseListener {
 		coords = new int[] { 2, 4 };
 		initQuestions();
 		this.addKeyListener(this);
+		this.addMouseListener(this);
 	}
 
 	@Override
@@ -128,35 +136,35 @@ public class MazeLevel extends GamePanel implements KeyListener,MouseListener {
 		// TODO Auto-generated method stub
 
 		repaint();
-		return State.MAZE;
+		return returnState;
 	}
 	/**
 	* Initializes the questions and answers which appears on the signs
 	*/
 	private void initQuestions() {
 		questions = new String[] {
-				"If you were playing an online video game, and someone typed in \nchat that one of your teammates is a *****, \nwhat would be the appropriate response?",
-				"Your team is having a negative attitude, and they want to give up. \nWhat should you do?",
-				"Someone on your team is griefing\n(you'll know what this means if you finished the learning level). \nHow would you attempt to convince them to stop?",
+				"If you were playing an online video game, and someone \ntyped in chat that one of your teammates is a *****, \nwhat would be the appropriate response?",
+				"Your team is having a negative attitude, and they want \nto give up. What should you do?",
+				"Someone on your team is griefing(you'll know\nwhat this means if you finished the learning level). \nHow would you attempt to convince them to stop?",
 				"When you were playing a game and defeated an enemy, \nthey told you that they were with your mom last night. \nHow should you respond?",
-				"You got into a skirmish with an enemy, and you lost immediately. \nOne of your teammates says \"I hope you stub your toe irl\".\nWhat is your response?" };
+				"You got into a skirmish with an enemy, and you lost \nimmediately. One of your teammates says \"I hope you \nstub your toe irl\".What is your response?" };
 		answers = new String[][] {
-				new String[] { "(Left) Thats not a nice thing to say. Im going to report you.",
+				new String[] { "(Left) Thats was very mean. Im going to report you.",
 						"(Up) I think you are a ***** as well",
-						"(Right) Im sorry that you act this way. \nIt must be because your parents don't love you" },
+						"(Right) Im sorry that you act this way. \nIt must be because your parents don't love you." },
 				new String[] { "(Left) Join them in having a negative attitude",
 						"(Up) Say: Don't give up guys. I know we can win this!",
 						"(Down) Say: FF my team is griefing." },
 				new String[] {
-						"(Left) Griefing isnt good. We can achieve victory if you stop!",
-						"(Up) 61.130.157.185, Cave City, Kentucky, 42127, United States",
-						"(Right) You are playing horribly. You must be a bad person in real life" },
-				new String[] { "(Left) Saying things like that isn't right. Your words won't affect me",
-						"(Up) I enjoyed a lot of time with your mother and your sister yesterday",
+						"(Left) Griefing isnt good. We can achieve victory!",
+						"(Up) 61.130.157.185,Cave City,Kentucky,42127,US",
+						"(Right) You are playing horribly. \nYou must be a bad person in real life" },
+				new String[] { "(Left) Saying things like that isn't right.",
+						"(Up) I enjoyed my time with your mother last night",
 						"(Right) I hope that you keep yourself safe" },
 				new String[] {
 						"(Left)Go break a leg. Literally.",
-						"(Up)I've stubbed my toes many times. Once more won't affect me. ", "(Down) Stay silent" }
+						"(Up)I've stubbed my toes many times, it won't hurt. ", "(Down) Stay silent" }
 		};
 	}
 	/**
@@ -179,13 +187,31 @@ public class MazeLevel extends GamePanel implements KeyListener,MouseListener {
 	* Paints the instruction screen
 	*/
 	public void paintInstructions(Graphics g){
+		g.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 20));
+		String info = "Welcome recruit, to the maze! The maze is a test of the skills you learned \nabout in the learning area. Using either the WASD or \narrow keys,navigate your character through each crossroad \nby answering the questions on the signboards. \nWalking close to the signboard will allow you \nto read the question, and each answer will have a pathway \ncorresponding to them. Taking the correct path will lead \nyou closer to the exit, but the wrong path will \nlead you to a dead end. Walk towards the light \nin the final room to complete the maze!"; 
 
+		drawString(g,info, 30, 50);
+
+		
+		g.fillRect(200, 375, 400, 50);
+		g.setColor(Color.white);
+		g.drawString("Continue", 350, 405);
+		g.drawImage(narrator,40,340,null);
 	}
 	/**
 	*Paints the final screen after finishing the maze
 	*/
 	public void paintFinal(Graphics g){
-
+		g.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 20));
+		String info = "Congratulations recruit! You've finished the maze level.\nNow, we are sending you to complete the final mission. \nAn all action level!";
+		drawString(g,info, 50, 100);
+		g.fillRect(200, 300, 175, 65);
+		g.fillRect(425, 300, 175, 65);
+		g.setColor(Color.white);
+		g.drawString("CONTINUE", 235, 340);
+		g.drawString("MAIN MENU", 460, 340);
+		
+		g.drawImage(narrator,40,250,null);
 	}
 	/**
 	* Paints the rooms of the maze
@@ -284,8 +310,8 @@ public class MazeLevel extends GamePanel implements KeyListener,MouseListener {
 		* Class constructor 
 		*/
 		public Player() {
-			x = 400;
-			y = 250;
+			x = 360;
+			y = 400;
 			try {
 				avatars = new Image[] { ImageIO.read(new File("Avatar1.png")), ImageIO.read(new File("Avatar2.png")),
 						ImageIO.read(new File("Avatar3.png")) };
@@ -394,7 +420,6 @@ public class MazeLevel extends GamePanel implements KeyListener,MouseListener {
 				p.sety(450);
 			}
 			if (Arrays.equals(new int[] { 0, 1 }, coords)) {
-				System.out.println(p.getx()+" "+p.gety());
 				if (y <= 220 && x >= 358 && x <= 390) {
 					currentState = "final";
 				}
@@ -486,31 +511,43 @@ public class MazeLevel extends GamePanel implements KeyListener,MouseListener {
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'mouseClicked'");
+		int x = e.getX();
+		int y = e.getY();
+		if (currentState == "instructions"){
+			if (x >= 200 && x <= 600 && y >= 375 && y <= 425){
+				currentState = "room";
+			}
+		}
+		else if  (currentState == "final"){
+			System.out.println(x+" "+y);
+			if ( x >= 200 &&  x <= 375 && y >=300 && y <=365){
+				returnState = State.ACTION;
+			}
+			else if (x >= 425 &&  x <= 600 && y >=175 && y <=365){
+				returnState = State.MENU;
+			}
+		}
+		repaint();
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'mousePressed'");
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'mouseReleased'");
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
 		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'mouseEntered'");
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'mouseExited'");
 	}
 
 }

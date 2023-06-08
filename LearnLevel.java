@@ -55,7 +55,11 @@ public class LearnLevel extends GamePanel implements MouseListener {
 	 * A pixil art image representing a card the user has read
 	 */
 	private Image questionCard;
-
+	/**
+	 * An image representing the narrator
+	 */
+	private Image narrator;
+	
 	/**
 	 * Class constructor of LearnLevel
 	 */
@@ -79,6 +83,8 @@ public class LearnLevel extends GamePanel implements MouseListener {
 		try {
 			checkCard = ImageIO.read(new File("CheckCard.jpg"));
 			questionCard = ImageIO.read(new File("questionCard.jpg"));
+			narrator = ImageIO.read(new File("Narrator.png"));
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -168,7 +174,7 @@ public class LearnLevel extends GamePanel implements MouseListener {
 
 		g.drawString("Continue", 350, 400);
 		g.drawRect(200, 375, 400, 50);
-
+		g.drawImage(narrator,40,340,null);
 	}
 	/**
 	 * Taken from Stack overflow to do newlines in drawString
@@ -189,7 +195,7 @@ public class LearnLevel extends GamePanel implements MouseListener {
 	 * @param g
 	 */
 	private void paintMain(Graphics g) {
-		cardsFinished = 0;
+		cardsFinished = 12;
 		for (int i = 0; i < cardArr.length; i++) {
 			for (int j = 0; j < cardArr[0].length; j++) {
 				// drawing finished card
@@ -207,20 +213,28 @@ public class LearnLevel extends GamePanel implements MouseListener {
 
 	
 		if (cardsFinished == 12){
+			g.setColor(Color.white);
+			g.fillRect(150, 350, 700, 50);
 			g.setColor(Color.GREEN);
-			g.fillRect(700, 400, 75, 50);
+			g.fillRect(700, 410, 75, 50);
 			g.setColor(Color.WHITE);
 			g.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 15));
-			g.drawString("CONTINUE", 705, 430);
+			g.drawString("CONTINUE", 700, 440);
 			g.setColor(Color.green);
 			g.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 30));
 			g.drawString("Click the bottom right to continue!",150,380);
+			g.drawImage(narrator,0,340,null);
 		}
 		else{
+			g.setColor(Color.white);
+			g.fillRect(220, 350, 450, 50);
 			g.setColor(Color.green);
 			g.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 30));
 			g.drawString("Click all the grey cards!",220,380);
+			g.drawImage(narrator,40,340,null);
 		}
+		
+
 	}
 
 	public void paintFinal(Graphics g) {
@@ -231,6 +245,8 @@ public class LearnLevel extends GamePanel implements MouseListener {
 		g.drawString("MAIN MENU", 465, 340);
 		g.drawRect(200, 300, 175, 65);
 		g.drawRect(425, 300, 175, 65);
+		g.drawImage(narrator,40,250,null);
+
 	}
 
 	@Override
