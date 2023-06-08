@@ -42,7 +42,6 @@ public class SplashScreen extends GamePanel {
 	@Override
 	public State display() {
 		repaint();
-		System.out.println(count);
 		count++;
 		return count > 1000 ? State.MENU : State.SPLASH;
 	}

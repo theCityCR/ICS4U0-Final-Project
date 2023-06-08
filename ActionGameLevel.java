@@ -32,7 +32,7 @@ public class ActionGameLevel extends ActionGamePanel {
 	/**
 	 * Min frames before AI gives insult
 	 */
-	public static final int FRAMES_MIN = 150;
+	public static final int FRAMES_MIN = 250;
 
 	/**
 	 * Max frames before AI gives insult
@@ -225,6 +225,11 @@ public class ActionGameLevel extends ActionGamePanel {
 	 * Background to show
 	 */
 	private static BufferedImage background;
+	
+	/**
+	 * Count frames
+	 */
+	private int count;
 
 	/**
 	 * Creates a new ActionGameLevel instance
@@ -260,6 +265,7 @@ public class ActionGameLevel extends ActionGamePanel {
 		up = false;
 		down = false;
 		mouseDown = false;
+		count = 0;
 
 		this.addKeyListener(new KeyAdapter() {
 
@@ -361,6 +367,7 @@ public class ActionGameLevel extends ActionGamePanel {
 		up = false;
 		down = false;
 		mouseDown = false;
+		count = 0;
 	}
 
 	/**
@@ -371,8 +378,11 @@ public class ActionGameLevel extends ActionGamePanel {
 	@Override
 	public ActionState display() {
 		requestFocusInWindow();
-		for (Moveable m : movers) {
-			m.move();
+		count ++;
+		if (count > 150) {
+			for (Moveable m : movers) {
+				m.move();
+			}
 		}
 		for (Moveable m : toRemove) {
 			movers.remove(m);
@@ -419,6 +429,11 @@ public class ActionGameLevel extends ActionGamePanel {
 		} catch (ConcurrentModificationException e) {
 //			e.printStackTrace();
 			repaint();
+		}
+		if (count < 150) {
+			g.setColor(Color.BLACK);
+			g.setFont(new Font(Font.MONOSPACED, Font.BOLD, 300));
+			g.drawString(Integer.toString(3 - (count / 50)), 300, 330);
 		}
 		g.drawImage(GamePanel.getButtonIcon(), 28, 20, 78, 70, 0, 0, 50, 50, null);
 	}
@@ -890,7 +905,8 @@ public class ActionGameLevel extends ActionGamePanel {
 		 * Creates a new AITank object
 		 */
 		public AITank() {
-			super(Color.RED, 650, 400, 20, 10 * TANK_HEALTH, 2);
+			super(Color.RED, 650, 400, 20, TANK_HEALTH, 2);
+			setDirection(new Direction(-1, 0));
 		}
 
 		/**
