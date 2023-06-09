@@ -131,6 +131,7 @@ public class MazeLevel extends GamePanel implements KeyListener,MouseListener {
 	@Override
 	/**
 	* Used to repaint and return when to switch screens
+	* @return the level the game should be on
 	*/
 	public State display() {
 		// TODO Auto-generated method stub
@@ -169,6 +170,7 @@ public class MazeLevel extends GamePanel implements KeyListener,MouseListener {
 	}
 	/**
 	* Paints the Maze level
+	* @param g the graphics context
 	*/
 	public void paintComponent(Graphics g) {
 		if (!requested)
@@ -185,6 +187,7 @@ public class MazeLevel extends GamePanel implements KeyListener,MouseListener {
 	}
 	/**
 	* Paints the instruction screen
+	* @param g the graphics context
 	*/
 	public void paintInstructions(Graphics g){
 		g.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 20));
@@ -200,6 +203,7 @@ public class MazeLevel extends GamePanel implements KeyListener,MouseListener {
 	}
 	/**
 	*Paints the final screen after finishing the maze
+	* @param g the graphics context
 	*/
 	public void paintFinal(Graphics g){
 		g.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 20));
@@ -215,6 +219,7 @@ public class MazeLevel extends GamePanel implements KeyListener,MouseListener {
 	}
 	/**
 	* Paints the rooms of the maze
+	* @param g the graphics context
 	*/
 	public void paintRoom(Graphics g) {
 		if (Arrays.equals(coords, new int[] { 2, 4 }) || Arrays.equals(coords, new int[] { 2, 3 })
@@ -281,10 +286,10 @@ public class MazeLevel extends GamePanel implements KeyListener,MouseListener {
 	 * Source:
 	 * https://stackoverflow.com/questions/4413132/problems-with-newline-in-graphics2d-drawstring
 	 * 
-	 * @param g
-	 * @param text
-	 * @param x
-	 * @param y
+	 * @param g the graphics context
+	 * @param text the string that will be drawn
+	 * @param x the x coordinate for where the string will be drawn
+	 * @param y the y coordinate for where the string will be drawn
 	 */
 	private void drawString(Graphics g, String text, int x, int y) {
 		for (String line : text.split("\n"))
@@ -427,30 +432,35 @@ public class MazeLevel extends GamePanel implements KeyListener,MouseListener {
 		}
 		/**
 		* Set method for x value. Mainly for collision
+		* @param value the new x value
 		*/
 		void setx(int value) {
 			x = value;
 		}
 		/**
 		* Set method for y value. Mainly for collision
+		* @param value the new y value
 		*/
 		void sety(int value) {
 			y = value;
 		}
 		/**
 		* returns x value
+		* @return x, the x value of the player
 		*/
 		int getx() {
 			return x;
 		}
 		/**
 		* returns y value
+		* @return y, the y value of the player
 		*/
 		int gety() {
 			return y;
 		}
 		/**
 		* returns a different avatar based on a timer to animate walking.
+		* @return avatars[(walkCounter / 10) % 3], different avatar sprite to animate walking
 		*/
 		Image getAvatar() {
 			return avatars[(walkCounter / 10) % 3];
@@ -464,6 +474,10 @@ public class MazeLevel extends GamePanel implements KeyListener,MouseListener {
 	}
 
 	@Override
+	/**
+	* the event for when a key is pressed. Used for movement in the maze level.
+	* @param e, the KeyEvent
+	*/
 	public void keyPressed(KeyEvent e) {
 
 		switch (e.getKeyCode()) {
@@ -487,6 +501,10 @@ public class MazeLevel extends GamePanel implements KeyListener,MouseListener {
 	}
 
 	@Override
+	/**
+	* the event for when a key is pressed. Used for movement in the maze level.
+	* @param e, the KeyEvent
+	*/
 	public void keyReleased(KeyEvent e) {
 		switch (e.getKeyCode()) {
 			case KeyEvent.VK_UP:
@@ -509,6 +527,10 @@ public class MazeLevel extends GamePanel implements KeyListener,MouseListener {
 	}
 
 	@Override
+	/**
+	* the event for when the mouse is clicked. Used for movement in the maze level.
+	* @param e, the MouseEvent
+	*/
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
 		int x = e.getX();
