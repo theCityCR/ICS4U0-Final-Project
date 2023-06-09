@@ -28,10 +28,6 @@ public class GameMenu extends GamePanel implements MouseListener{
 	*/
 	private State returnState;
 	/**
-	* previous screen of the GameMenu. Helps to know when to repaint and clear screen
-	*/
-	private String previousState;
-	/**
 	* counting frames for the splash screen animation
 	*/
 	private int framesDone;
@@ -41,7 +37,6 @@ public class GameMenu extends GamePanel implements MouseListener{
 	*/
 	public GameMenu() {
 		state = "main";
-		previousState = state;
 		returnState = State.MENU;
 		setPreferredSize(new Dimension(800, 500));
 		setLayout(new FlowLayout());
@@ -49,15 +44,11 @@ public class GameMenu extends GamePanel implements MouseListener{
 	}
 	
 	/**
-	* Returns the return state, or what the screen the game should currently be on. Also used to animate the splash screen
+	* Returns the return state, or what the screen the game should currently be on. 
 	* returns: returnstate, the state that the screen should be on
 	*/
 	@Override
 	public State display() {
-		if (state == "splash") {
-			framesDone++;
-			repaint();
-		}
 		return returnState;
 	}
 	
@@ -79,27 +70,7 @@ public class GameMenu extends GamePanel implements MouseListener{
 
 		
 	}
-	/**
-	* Helper method to paint the splash screen.
-	*/
-	private void paintSplash(Graphics g) {
-		ImageIcon logo = new ImageIcon("src//culminating//Culminating Company Logo.jpg"); //TODO change
-//		int w = logo.getIconWidth();
-//		int h = logo.getIconHeight();
-		logo.paintIcon(this, g, -500 + framesDone * 3, 50);
-
-		g.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 30));
-		g.drawString("O&L Design Firms presents...", -350 + framesDone * 3, 100);
-
-		if (framesDone == 450) {
-			framesDone = 0;
-			state = "main";
-			repaint();
-			removeAll();
-		}
-		
-		
-	}
+	
 	/**
 	* Helper method to paint the main menu
 	*/
