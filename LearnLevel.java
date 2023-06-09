@@ -243,7 +243,10 @@ public class LearnLevel extends GamePanel implements MouseListener {
 		
 
 	}
-
+	/**
+	* Paints the screen which shows after the learn level has finished
+	* @param g the graphics context
+	*/
 	public void paintFinal(Graphics g) {
 		g.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 20));
 		String info = "Congratulations recruit! \nYou've finished the learning level.\nNow, we are sending you to complete the maze.";
