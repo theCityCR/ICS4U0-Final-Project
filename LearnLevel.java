@@ -118,6 +118,7 @@ public class LearnLevel extends GamePanel implements MouseListener {
 	@Override
 	/**
 	 * paints all of the things inside of the learn level
+	 * @param g the graphics context
 	 */
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
@@ -186,10 +187,10 @@ public class LearnLevel extends GamePanel implements MouseListener {
 	/**
 	 * Taken from Stack overflow to do newlines in drawString
 	 * Source: https://stackoverflow.com/questions/4413132/problems-with-newline-in-graphics2d-drawstring 
-	 * @param g
-	 * @param text
-	 * @param x
-	 * @param y
+	 * @param g graphics context
+	 * @param text string that you want to draw
+	 * @param x x coordinate of the string
+	 * @param y y coordinate of the string
 	 */
 	private void drawString(Graphics g, String text, int x, int y) {
         for (String line : text.split("\n"))
@@ -199,7 +200,7 @@ public class LearnLevel extends GamePanel implements MouseListener {
 	/**
 	 * helper method to paint the main screen with 12 cards
 	 * 
-	 * @param g
+	 * @param g the graphics context
 	 */
 	private void paintMain(Graphics g) {
 		cardsFinished = 0;
@@ -262,6 +263,10 @@ public class LearnLevel extends GamePanel implements MouseListener {
 	}
 
 	@Override
+	/**
+	* Method that is called to repaint and return the current level the game should be on.
+	* @return returnState, the current level the game should be on.
+	*/
 	public State display() {
 		repaint();
 		return returnState;
@@ -269,6 +274,7 @@ public class LearnLevel extends GamePanel implements MouseListener {
 
 	/**
 	 * Method that runs when the moused is clicked
+	 * @param Me the MouseEvent 
 	 */
 	public void mouseClicked(MouseEvent e) {
 		int x = e.getX();
