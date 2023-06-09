@@ -53,7 +53,7 @@ public abstract class GamePanel extends JPanel {
 
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					if (20 < e.getX() && e.getX() < 70 && 20 < e.getY() && e.getY() < 70) {
+					if (0 < e.getX() && e.getX() < 50 && 0 < e.getY() && e.getY() < 50) {
 						setToRet(State.MENU);
 					}
 				}
@@ -89,7 +89,7 @@ public abstract class GamePanel extends JPanel {
 	public void paint(Graphics g) {
 		super.paint(g);
 		if (showMenu()) {
-			g.drawImage(getButtonIcon(), 20, 20, 70, 70, 0, 0, 50, 50, null);
+			g.drawImage(getButtonIcon(), 0, 0, 50, 50, 0, 0, 50, 50, null);
 		}
 	}
 	
