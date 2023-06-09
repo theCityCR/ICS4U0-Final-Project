@@ -9,6 +9,17 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * @author Alex Li
+ * 
+ *         Teacher: Mrs. Krasteva
+ * 
+ *         Date: 2023-05-15
+ * 
+ *         This class represents the learning level. It is supposed to teach
+ *	   the user what video game toxicity is, and how to combat it.
+ */
+
 @SuppressWarnings("serial")
 public class LearnLevel extends GamePanel implements MouseListener {
 	/**
