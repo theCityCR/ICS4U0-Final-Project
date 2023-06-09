@@ -333,7 +333,7 @@ public class ActionGameLevel extends ActionGamePanel {
 			
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (28 < e.getX() && e.getX() < 78 && 20 < e.getY() && e.getY() < 70) {
+				if (3 < e.getX() && e.getX() < 53 && 0 < e.getY() && e.getY() < 50) {
 					GameMain.getGame().getCurrentPanel().setToRet(State.MENU);
 				}
 			}
@@ -435,7 +435,7 @@ public class ActionGameLevel extends ActionGamePanel {
 			g.setFont(new Font(Font.MONOSPACED, Font.BOLD, 300));
 			g.drawString(Integer.toString(3 - (count / 50)), 300, 330);
 		}
-		g.drawImage(GamePanel.getButtonIcon(), 28, 20, 78, 70, 0, 0, 50, 50, null);
+		g.drawImage(GamePanel.getButtonIcon(), 3, 0, 53, 50, 0, 0, 50, 50, null);
 	}
 
 	/**
