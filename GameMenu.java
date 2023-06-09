@@ -45,7 +45,7 @@ public class GameMenu extends GamePanel implements MouseListener{
 	
 	/**
 	* Returns the return state, or what the screen the game should currently be on. 
-	* returns: returnstate, the state that the screen should be on
+	* @return returnstate, the state that the screen should be on
 	*/
 	@Override
 	public State display() {
@@ -54,6 +54,7 @@ public class GameMenu extends GamePanel implements MouseListener{
 	
 	/**
 	* method to paint on the JPanel of this class. Changes depending on the current state of the class.
+	* @param g the graphics context
 	*/
 	@Override
 	public void paintComponent(Graphics g) {
@@ -73,6 +74,7 @@ public class GameMenu extends GamePanel implements MouseListener{
 	
 	/**
 	* Helper method to paint the main menu
+	* @param g the graphics context
 	*/
 	private void paintMain(Graphics g) {
 		
@@ -106,6 +108,10 @@ public class GameMenu extends GamePanel implements MouseListener{
 	}
 
 	@Override
+	/**
+	* Method that is called when mouse is clicked. Used to give functionality to buttons in the main menu. 
+	* @param e the MouseEvent
+	*/
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
 		if (e.getX() >= 190 && e.getX() <= 590) {
