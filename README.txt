@@ -6,7 +6,7 @@ Our game requires a screen, a keyboard, and a mouse. Trackpad will also work but
 
 When clicking, since we overrode Java's MouseClicked method, the mouse must not move between pressing down and releasing, otherwise Java will not recognize it as clicking. This does not affect shooting in the game as we only check for MousePress and MouseRelease. 
 The game may be hard to get a grasp of as it is designed to be challenging. 
-In the learning level, some text might be slightly hard to read because the way we organized it on visual studio code at home does not organize the same way in eclipse, and maybe jGrasp. This only affects the second card in the first row in the learning level due to its slightly extensive length.
+In the learning level, some text might be slightly hard to read because the way we organized it on visual studio code at home does not organize the same way in eclipse, and maybe jGrasp. This only affects the second card in the first row in the learning level due to its slightly extensive length. Some KeyListener/MouseListener methods were not implemented because they were not necessary, but had to be implemented.
 
 
 General Tips
