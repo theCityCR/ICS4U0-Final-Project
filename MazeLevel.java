@@ -552,7 +552,6 @@ public class MazeLevel extends GamePanel implements KeyListener,MouseListener {
 			}
 		}
 		else if  (currentState == "final"){
-			System.out.println(x+" "+y);
 			if ( x >= 200 &&  x <= 375 && y >=300 && y <=365){
 				returnState = State.ACTION;
 			}
