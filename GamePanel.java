@@ -74,6 +74,7 @@ public abstract class GamePanel extends JPanel {
 	 * @return	the state to be in
 	 */
 	public State newState() {
+		requestFocusInWindow();
 		if (toRet == null) {
 			return display();
 		} else {
