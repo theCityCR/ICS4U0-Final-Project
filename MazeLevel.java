@@ -10,6 +10,17 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Arrays;
 
+/**
+ * @author Alex Li
+ * 
+ *         Teacher: Mrs. Krasteva
+ * 
+ *         Date: 2023-05-15
+ * 
+ *         This class represents the maze level. It is supposed to test the users
+ *	   knowledge and learning of video game toxicity in the form of navigating
+ *	   a maze.
+ */
 public class MazeLevel extends GamePanel implements KeyListener,MouseListener {
 	/**
 	 * used for navigating the rooms array
