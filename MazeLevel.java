@@ -529,7 +529,7 @@ public class MazeLevel extends GamePanel implements KeyListener,MouseListener {
 		}
 		repaint();
 	}
-
+	// Methods which were not implemented
 	@Override
 	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
