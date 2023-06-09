@@ -154,10 +154,6 @@ public class LearnLevel extends GamePanel implements MouseListener {
 	 * Paints a card and the info on it
 	 *
 	 * @param g, graphics
-	 * 
-	 * @param row, the row of the element accessed in cardArr
-	 * 
-	 * @param column, the column of the element accessed in cardArr
 	 */
 	public void paintCard(Graphics g) {
 
@@ -285,7 +281,7 @@ public class LearnLevel extends GamePanel implements MouseListener {
 
 	/**
 	 * Method that runs when the moused is clicked
-	 * @param Me the MouseEvent 
+	 * @param e the MouseEvent 
 	 */
 	public void mouseClicked(MouseEvent e) {
 		int x = e.getX();
