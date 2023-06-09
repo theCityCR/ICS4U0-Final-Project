@@ -117,10 +117,11 @@ public class GameMain extends JFrame {
 	 * Adds the new panel
 	 */
 	private void addNew() {
-		setSize(800, 539);
-		setSize(800, 538);
 		currentPanel = currentState.getNew();
 		setContentPane(getCurrentPanel());
+		setSize(800, 539);
+		setSize(800, 540);
+		repaint();
 	}
 
 	/**
