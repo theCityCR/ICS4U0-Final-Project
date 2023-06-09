@@ -69,7 +69,7 @@ public class LearnLevel extends GamePanel implements MouseListener {
 		setPreferredSize(new Dimension(800, 500));
 		cardInfo = new ArrayList<String>();
 		currentState = "instructions";
-		previousState = "instructions";
+		previousState = currentState;
 		readInfoFromFile();
 		initializeCards();
 		this.addMouseListener(this);
@@ -78,7 +78,6 @@ public class LearnLevel extends GamePanel implements MouseListener {
 	 * reading in images and lines from a txt
 	 */
 	private void readInfoFromFile() {
-		File myObj = new File("src//culminating//research.txt");
 
 		try {
 			checkCard = ImageIO.read(new File("CheckCard.jpg"));
@@ -88,18 +87,19 @@ public class LearnLevel extends GamePanel implements MouseListener {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		if (myObj.exists()) {
-			Scanner myReader;
-			try {
-				myReader = new Scanner(myObj);
-				while (myReader.hasNextLine()) {
-					String data = myReader.nextLine();
-					cardInfo.add(data);
-				}
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			}
-		}
+		
+		cardInfo.add("Video game toxicity is the act of \nnegative,abusive, and disrespectful behavior \ntowards other players."); 
+		cardInfo.add("Video game toxicity has been rising \nin the past few years, and does \nnot seem to be going down. 81% of \npeople who played online multiplayer games \nexperienced some form of harassment, compared \nto 74% of people in the 2019 survey. 68% \nof people experienced more severe abuse, \nincluding physical threats, stalking, and \nsustained harassment, up from 65% in 2019.");
+		cardInfo.add("Examples of toxic behavior are griefing \nand verbal harassment. Griefing is \nintentionally ruining the gaming \nexperience of other players. Examples \ninclude bullying lower level players \nor purposely aiding the enemy \nteam instead of yours. ");
+		cardInfo.add("Toxic language includes using profanity, \ncalling players derogatory names, or \ninsulting players\' skills. Many \nkinds of insults will come up in video \ngames, and none of these will \never be acceptable. ");
+		cardInfo.add("Reporting the player, muting or blocking \nthem, or exiting the game are effective \nstrategies against toxic players. Many \ngames will have the option to report \nplayers in game, but if not, usually \nsending an email to the company or \ndevelopment team will also work.");
+		cardInfo.add("Responding with toxic behavior of your own \nis not an effective way to deal with toxic \nbehavior as it only perpetuates the \ncycle of toxicity. Rather than fighting \nfire with fire, try other methods.");
+		cardInfo.add("Toxic behavior can decrease enjoyment and \nnegatively impact teamwork. This is because \nnegativity can negatively impact the \nemotions of others and irritate them, causing \nthem to go against the idea of proper teamwork.");
+		cardInfo.add("Promoting positive behavior is a great way \nto create an enjoyable gaming experience for \nall players. It creates a positive feedback \nloop where everyone wants to be positive.");
+		cardInfo.add("Encouraging players to work together \ntowards a common goal, congratulating \nopponents on a well-played game, and \noffering help to other players can promote \npositive behavior. By actively promoting \npositive behaviour, it will also actively \nimprove your own mental health.");
+		cardInfo.add("Taunting opponents, insulting players \nwho make mistakes, and cheating are not \neffective in promoting positive \nbehavior, but rather promote toxic behavior. \nCreating unfair and unsafe environments \nin video games is a way to foster \nnegativity and unfair play.");
+		cardInfo.add("Addressing the root causes of toxic \nbehavior by providing education and training \non proper conduct and behavior, \nand creating guidelines on acceptable \nbehavior can reduce toxic behavior. ");
+		cardInfo.add("Collaborative efforts from players, \ngame developers, and administrators will \ncreate a gaming environment that is \nenjoyable and welcoming for all players.");
 	}
 	/**
 	 * initializes instance variables and values related to cards
@@ -159,8 +159,13 @@ public class LearnLevel extends GamePanel implements MouseListener {
 			}
 		});
 		g.setFont(new Font(Font.MONOSPACED,Font.PLAIN,25));
-		g.drawString(cardArr[row][column].getInfo(), 50, 50);
+		g.setColor(Color.gray);
+		g.fillRect(0, 0, 800, 500);
+		g.setColor(Color.white);
+		drawString(g,cardArr[row][column].getInfo(), 50, 50);
+
 		add(card);
+		g.drawImage(narrator,40,340,null);
 	}
 
 	/**
@@ -172,8 +177,10 @@ public class LearnLevel extends GamePanel implements MouseListener {
 		String info = "Recruit, welcome to Fair Play Frontier! Before we send you\nto the frontier, you need training! First, you’ll need to\nlearn about Fair Play! Fair Play is a way to of playing games\nthat combats toxicity in video games. To start learning,\nclick the flash cards on the screen. After clicking the cards,\nthe information on the card will be enlarged, and you can see\nthe information! Clicking the screen again will close it.\nThe card will turn green.\nAdvance by turning all your cards green.";
 		drawString(g,info, 30, 50);
 
-		g.drawString("Continue", 350, 400);
-		g.drawRect(200, 375, 400, 50);
+		
+		g.fillRect(200, 375, 400, 50);
+		g.setColor(Color.white);
+		g.drawString("Continue", 350, 405);
 		g.drawImage(narrator,40,340,null);
 	}
 	/**
@@ -195,7 +202,7 @@ public class LearnLevel extends GamePanel implements MouseListener {
 	 * @param g
 	 */
 	private void paintMain(Graphics g) {
-		cardsFinished = 12;
+		cardsFinished = 0;
 		for (int i = 0; i < cardArr.length; i++) {
 			for (int j = 0; j < cardArr[0].length; j++) {
 				// drawing finished card
@@ -219,7 +226,7 @@ public class LearnLevel extends GamePanel implements MouseListener {
 			g.fillRect(700, 410, 75, 50);
 			g.setColor(Color.WHITE);
 			g.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 15));
-			g.drawString("CONTINUE", 700, 440);
+			g.drawString("CONTINUE", 705, 440);
 			g.setColor(Color.green);
 			g.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 30));
 			g.drawString("Click the bottom right to continue!",150,380);
@@ -239,12 +246,14 @@ public class LearnLevel extends GamePanel implements MouseListener {
 
 	public void paintFinal(Graphics g) {
 		g.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 20));
-		String info = "Congratulations recruit! \nYou've finished the learning level.\n Now, we are sending you to complete the maze.";
-		g.drawString(info, 200, 100);
+		String info = "Congratulations recruit! \nYou've finished the learning level.\nNow, we are sending you to complete the maze.";
+		drawString(g,info, 100, 100);
+		
+		g.fillRect(200, 300, 175, 65);
+		g.fillRect(425, 300, 175, 65);
+		g.setColor(Color.white);
 		g.drawString("CONTINUE", 250, 340);
 		g.drawString("MAIN MENU", 465, 340);
-		g.drawRect(200, 300, 175, 65);
-		g.drawRect(425, 300, 175, 65);
 		g.drawImage(narrator,40,250,null);
 
 	}
